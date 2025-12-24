@@ -48,7 +48,7 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     return { ...createInitialFormData(), ...initialData };
   });
 
-  const [currentSection, setCurrentSection] = useState<number>(() => {
+  const [currentSection, setCurrentSectionState] = useState<number>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -62,6 +62,25 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     }
     return 0;
   });
+
+  // Wrapper to save currentSection to localStorage immediately on change
+  const setCurrentSection = useCallback((section: number) => {
+    setCurrentSectionState(section);
+    // Immediately persist to localStorage to survive language switches
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        const existing = saved ? JSON.parse(saved) : {};
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          ...existing,
+          currentSection: section,
+          savedAt: new Date().toISOString()
+        }));
+      } catch {
+        // Ignore errors
+      }
+    }
+  }, []);
 
   const [completedSections, setCompletedSections] = useState<Set<number>>(() => {
     if (typeof window !== 'undefined') {

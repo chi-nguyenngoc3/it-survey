@@ -16,7 +16,8 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
     const segments = pathname.split('/');
     segments[1] = newLocale;
     const newPath = segments.join('/');
-    router.push(newPath);
+    // Use replace instead of push for smoother transition without adding to history
+    router.replace(newPath);
   };
 
   return (
