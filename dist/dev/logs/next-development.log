@@ -1,0 +1,6 @@
+[00:00:00.584] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:00.586] Server  ERROR   ⨯ Middleware cannot be used with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[00:00:00.650] Server  LOG     ✓ Ready in 483ms
+[00:00:01.787] Server  ERROR   ⨯ Error: Route /[locale]/survey with `dynamic = "error"` couldn't be rendered statically because it used `headers()`. See more info here: https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic#dynamic-rendering
+[00:00:01.908] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:02.250] Browser ERROR   uncaughtError: Error: Route /[locale]/survey with `dynamic = "error"` couldn't be rendered statically because it used `headers()`. See more info here: https://nextjs.org/docs/app/building-your-application/rendering/static-and-dynamic#dynamic-rendering

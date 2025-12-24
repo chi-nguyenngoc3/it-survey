@@ -1,0 +1,452 @@
+{
+  "common": {
+    "appName": "Khảo sát ITSM",
+    "save": "Lưu",
+    "saving": "Đang lưu...",
+    "saved": "Đã lưu",
+    "export": "Xuất dữ liệu",
+    "import": "Nhập dữ liệu",
+    "next": "Tiếp theo",
+    "previous": "Quay lại",
+    "complete": "Hoàn thành",
+    "markComplete": "Đánh dấu Hoàn thành",
+    "required": "Bắt buộc",
+    "optional": "Tùy chọn",
+    "select": "Chọn...",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "close": "Đóng",
+    "yes": "Có",
+    "no": "Không"
+  },
+  "header": {
+    "title": "Thu thập Dữ liệu ITSM",
+    "subtitle": "Đánh giá Quản lý Dịch vụ CNTT cho Giáo dục",
+    "language": "Ngôn ngữ"
+  },
+  "footer": {
+    "copyright": "© 2024 ITSM Survey. Tất cả các quyền được bảo lưu.",
+    "privacy": "Chính sách Bảo mật",
+    "terms": "Điều khoản Sử dụng",
+    "contact": "Liên hệ"
+  },
+  "survey": {
+    "progress": "Tiến độ",
+    "section": "Phần",
+    "of": "của",
+    "sectionsComplete": "phần hoàn thành",
+    "autoSave": "Tự động lưu mỗi 30 giây",
+    "lastSaved": "Lần lưu cuối",
+    "sections": {
+      "institution": {
+        "title": "Thông tin Cơ sở",
+        "description": "Thông tin cơ bản về cơ sở giáo dục của bạn"
+      },
+      "itOrganization": {
+        "title": "Tổ chức & Nhân sự CNTT",
+        "description": "Cấu trúc tổ chức và nguồn nhân lực CNTT"
+      },
+      "itProcesses": {
+        "title": "Quy trình CNTT & Mức độ Trưởng thành ITSM",
+        "description": "Các quy trình quản lý dịch vụ CNTT"
+      },
+      "applications": {
+        "title": "Danh mục Ứng dụng",
+        "description": "Hệ thống ứng dụng doanh nghiệp"
+      },
+      "processMapping": {
+        "title": "Ma trận Ánh xạ Quy trình-Hệ thống",
+        "description": "Ánh xạ quy trình kinh doanh với hệ thống"
+      },
+      "dataAnalytics": {
+        "title": "Dữ liệu & Phân tích",
+        "description": "Năng lực dữ liệu và phân tích"
+      },
+      "aiTechnology": {
+        "title": "AI & Công nghệ Mới",
+        "description": "Chiến lược và ứng dụng AI"
+      },
+      "infrastructure": {
+        "title": "Hạ tầng & Đám mây",
+        "description": "Cơ sở hạ tầng và chiến lược cloud"
+      },
+      "security": {
+        "title": "Bảo mật & Tuân thủ",
+        "description": "Khung bảo mật và tuân thủ quy định"
+      },
+      "financial": {
+        "title": "Phân tích Tài chính CNTT",
+        "description": "Ngân sách và chi phí CNTT"
+      },
+      "digitization": {
+        "title": "Số hóa Quy trình & Mức độ Trưởng thành Số",
+        "description": "Đánh giá mức độ số hóa"
+      }
+    },
+    "fields": {
+      "institutionName": "Tên Cơ sở",
+      "institutionType1": "Loại Cơ sở (Cấp 1)",
+      "institutionType2": "Hệ thống Trường (Cấp 2)",
+      "institutionType": "Loại Cơ sở (Học thuật)",
+      "studentPopulation": "Số lượng Sinh viên",
+      "employeeCount": "Tổng số Nhân viên",
+      "facultyCount": "Số lượng Giảng viên",
+      "campusCount": "Số lượng Cơ sở/Chi nhánh",
+      "contactName": "Tên Liên hệ",
+      "contactEmail": "Email Liên hệ",
+      "contactRole": "Chức vụ",
+      "fiscalYear": "Năm Tài chính",
+      "itReportingStructure": "CIO/CTO Báo cáo cho",
+      "cioCtoTitle": "Chức danh Lãnh đạo CNTT",
+      "itStaffCount": "Tổng số Nhân sự CNTT (FTE)",
+      "organizationalModel": "Mô hình Tổ chức",
+      "itilMaturity": "Mức độ Trưởng thành ITIL/ITSM",
+      "totalItBudget": "Tổng Ngân sách CNTT hàng năm",
+      "itBudgetPercent": "Ngân sách CNTT (% tổng ngân sách)",
+      "costPerStudent": "Chi phí CNTT/Sinh viên",
+      "costPerEmployee": "Chi phí CNTT/Nhân viên",
+      "datacenterStrategy": "Chiến lược Trung tâm Dữ liệu",
+      "securityFramework": "Khung Bảo mật"
+    },
+    "options": {
+      "institutionType1": {
+        "university": "Đại học",
+        "school": "Trường học"
+      },
+      "institutionType2": {
+        "sna": "Hệ thống Trường Quốc tế Bắc Mỹ (SNA)",
+        "uk_academy": "Hệ Thống Trường Quốc tế Song ngữ Học viện Anh Quốc (UK Academy)",
+        "ischool": "Hệ thống Trường Hội nhập Quốc tế iSchool"
+      },
+      "institutionType": {
+        "public_research": "Đại học Nghiên cứu Công lập",
+        "private_research": "Đại học Nghiên cứu Tư thục",
+        "public_comprehensive": "Đại học Tổng hợp Công lập",
+        "private_liberal_arts": "Đại học Nghệ thuật Tự do Tư thục",
+        "community_college": "Cao đẳng Cộng đồng",
+        "technical": "Trường Kỹ thuật/Dạy nghề",
+        "private_multi_campus": "Hệ thống Đa Cơ sở Tư thục",
+        "k12_international": "Trường Quốc tế K-12",
+        "k12_bilingual": "Trường Song ngữ K-12",
+        "k12_integrated": "Trường Hội nhập K-12"
+      },
+      "itReportingStructure": {
+        "president": "Hiệu trưởng/Chủ tịch",
+        "provost": "Phó Hiệu trưởng Học thuật",
+        "cfo": "Giám đốc Tài chính",
+        "coo": "Giám đốc Điều hành",
+        "other": "Khác"
+      },
+      "organizationalModel": {
+        "centralized": "Tập trung",
+        "decentralized": "Phân tán",
+        "hybrid": "Kết hợp"
+      },
+      "itilMaturity": {
+        "1": "Cấp 1 - Khởi đầu/Tùy ý",
+        "2": "Cấp 2 - Lặp lại được",
+        "3": "Cấp 3 - Đã định nghĩa",
+        "4": "Cấp 4 - Được quản lý",
+        "5": "Cấp 5 - Tối ưu hóa"
+      },
+      "datacenterStrategy": {
+        "on_premise": "Tại chỗ",
+        "colocation": "Thuê chỗ đặt máy",
+        "cloud_first": "Ưu tiên Cloud",
+        "hybrid": "Kết hợp",
+        "cloud_only": "Chỉ Cloud"
+      },
+      "hosting": {
+        "on_premise": "Tại chỗ",
+        "cloud_saas": "Cloud/SaaS",
+        "hosted": "Được quản lý/Thuê ngoài",
+        "hybrid": "Kết hợp"
+      }
+    },
+    "placeholders": {
+      "institutionName": "VD: Đại học ABC",
+      "contactName": "Họ và tên",
+      "contactEmail": "email@example.com",
+      "contactRole": "VD: CIO, Giám đốc CNTT",
+      "fiscalYear": "VD: FY2024 hoặc 2023-2024"
+    },
+    "tooltips": {
+      "required": "Trường này là bắt buộc",
+      "autoSave": "Dữ liệu của bạn được tự động lưu mỗi 30 giây"
+    },
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "email": "Email không hợp lệ",
+      "number": "Vui lòng nhập số",
+      "min": "Giá trị tối thiểu là {min}",
+      "max": "Giá trị tối đa là {max}"
+    },
+    "guidelines": {
+      "title": "Hướng dẫn Thu thập Dữ liệu",
+      "items": [
+        "Các trường đánh dấu * là bắt buộc để phân tích toàn diện",
+        "Tất cả dữ liệu tài chính nên phản ánh năm tài chính hoàn thành gần nhất",
+        "Sử dụng thuật ngữ của cơ sở nếu thuật ngữ chuẩn không áp dụng",
+        "Lưu tiến độ thường xuyên bằng nút 'Lưu'",
+        "Xuất dữ liệu dưới dạng JSON để gửi hoặc sao lưu",
+        "Liên hệ điều phối viên dự án nếu cần làm rõ bất kỳ phần nào"
+      ]
+    }
+  },
+  "itOrganization": {
+    "title": "Cấu trúc Tổ chức CNTT",
+    "staffDistribution": "Phân bổ Nhân sự CNTT (FTE)",
+    "fteBreakdown": {
+      "leadership": "Lãnh đạo/Quản lý",
+      "infrastructure": "Hạ tầng/Vận hành",
+      "applications": "Ứng dụng/Phát triển",
+      "security": "Bảo mật/Tuân thủ",
+      "servicedesk": "Service Desk/Hỗ trợ",
+      "projectmgmt": "Quản lý Dự án",
+      "data": "Dữ liệu/Phân tích",
+      "network": "Kỹ sư Mạng",
+      "other": "Khác"
+    }
+  },
+  "itProcesses": {
+    "title": "Quy trình CNTT & Mức độ Trưởng thành ITSM",
+    "serviceDesk": {
+      "title": "Service Desk",
+      "tool": "Công cụ ITSM",
+      "monthlyTickets": "Số Ticket trung bình/tháng",
+      "fcr": "Tỷ lệ Giải quyết Lần đầu (%)",
+      "resolutionTime": "Thời gian Giải quyết TB (giờ)"
+    },
+    "changeManagement": {
+      "title": "Quản lý Thay đổi",
+      "cabFrequency": "Tần suất họp CAB",
+      "successRate": "Tỷ lệ Thành công (%)"
+    },
+    "assetManagement": {
+      "title": "Quản lý Tài sản",
+      "tool": "Công cụ Quản lý Tài sản",
+      "cmdbAccuracy": "Độ chính xác CMDB (%)"
+    }
+  },
+  "applications": {
+    "title": "Danh mục Ứng dụng & Hệ thống",
+    "description": "Ánh xạ tất cả hệ thống doanh nghiệp cốt lõi và điểm tích hợp",
+    "sis": {
+      "title": "📚 Hệ thống Thông tin Sinh viên (SIS)",
+      "vendor": "Nhà cung cấp/Sản phẩm SIS",
+      "hosting": "Mô hình Lưu trữ",
+      "integration": "Phương thức Tích hợp",
+      "customization": "Mức độ Tùy chỉnh"
+    },
+    "lms": {
+      "title": "📖 Hệ thống Quản lý Học tập (LMS)",
+      "vendor": "Nhà cung cấp/Sản phẩm LMS",
+      "users": "Người dùng Hoạt động",
+      "satisfaction": "Mức độ Hài lòng (1-5)"
+    },
+    "crm": {
+      "title": "🤝 Quản lý Quan hệ Khách hàng (CRM)",
+      "vendor": "Nhà cung cấp/Sản phẩm CRM",
+      "purpose": "Mục đích Chính",
+      "users": "Số người dùng"
+    },
+    "erp": {
+      "title": "💼 Hoạch định Nguồn lực Doanh nghiệp (ERP)",
+      "vendor": "Nhà cung cấp/Sản phẩm ERP",
+      "version": "Phiên bản",
+      "implementationYear": "Năm Triển khai",
+      "modules": "Các Module đã Triển khai"
+    },
+    "integration": {
+      "title": "🔌 Nền tảng Tích hợp & Middleware",
+      "platform": "Nền tảng Tích hợp",
+      "apiTool": "Công cụ Quản lý API",
+      "sso": "Nhà cung cấp SSO/Identity",
+      "etl": "Công cụ ETL"
+    },
+    "totalApplications": "Tổng số Ứng dụng Doanh nghiệp",
+    "integrationChallenges": "Thách thức & Vấn đề Tích hợp Chính"
+  },
+  "processMapping": {
+    "title": "Ma trận Ánh xạ Quy trình-Hệ thống",
+    "description": "Ánh xạ hệ thống hỗ trợ từng quy trình kinh doanh quan trọng",
+    "businessProcess": "Quy trình Kinh doanh",
+    "primarySystem": "Hệ thống Chính",
+    "supportingSystems": "Hệ thống Hỗ trợ",
+    "dataFlow": "Mô tả Luồng Dữ liệu",
+    "processes": {
+      "recruitment": "Tuyển sinh",
+      "admissions": "Nhập học",
+      "registration": "Đăng ký Khóa học",
+      "courseDelivery": "Giảng dạy",
+      "gradeManagement": "Quản lý Điểm",
+      "financialAid": "Hỗ trợ Tài chính",
+      "billing": "Thanh toán Sinh viên",
+      "degreeAudit": "Kiểm tra Bằng cấp",
+      "advising": "Tư vấn Sinh viên",
+      "retention": "Phân tích Lưu giữ",
+      "graduation": "Tốt nghiệp",
+      "alumni": "Quan hệ Cựu sinh viên"
+    },
+    "integrationGaps": {
+      "title": "Thiếu hụt Tích hợp Quan trọng",
+      "sisLms": "SIS ↔ LMS (Vấn đề đồng bộ danh sách lớp)",
+      "lmsSis": "LMS ↔ SIS (Chậm trễ chuyển điểm)",
+      "sisErp": "SIS ↔ ERP (Lỗi đồng bộ thanh toán)",
+      "crmSis": "CRM ↔ SIS (Chuyển giao dữ liệu tuyển sinh)",
+      "biAll": "BI ↔ Tất cả Hệ thống (Vấn đề ETL kho dữ liệu)",
+      "noSso": "Không có Single Sign-On (SSO) giữa các hệ thống",
+      "manualReconciliation": "Cần đối chiếu dữ liệu thủ công"
+    },
+    "maturityLevel": {
+      "title": "Đánh giá Kiến trúc Tích hợp",
+      "level": "Mức độ Trưởng thành Tích hợp",
+      "levels": {
+        "1": "Cấp 1 - Point-to-Point/Thủ công",
+        "2": "Cấp 2 - Tự động hóa Cơ bản",
+        "3": "Cấp 3 - Middleware/Hub",
+        "4": "Cấp 4 - Nền tảng Tích hợp Doanh nghiệp",
+        "5": "Cấp 5 - Event-Driven Thời gian thực"
+      },
+      "activeIntegrations": "Số lượng Tích hợp Đang hoạt động"
+    }
+  },
+  "dataAnalytics": {
+    "title": "Dữ liệu & Phân tích",
+    "dataWarehouse": "Nền tảng Kho Dữ liệu",
+    "biTool": "Công cụ BI/Phân tích",
+    "dataGovernance": "Khung Quản trị Dữ liệu",
+    "dataLake": "Triển khai Data Lake",
+    "masterData": "Quản lý Dữ liệu Chủ",
+    "options": {
+      "governance": {
+        "formal": "Chính thức/Có tài liệu",
+        "informal": "Không chính thức",
+        "developing": "Đang phát triển",
+        "none": "Không có"
+      },
+      "dataLake": {
+        "production": "Đang sản xuất",
+        "pilot": "Thí điểm/POC",
+        "planned": "Đã lên kế hoạch",
+        "none": "Không có kế hoạch"
+      }
+    }
+  },
+  "infrastructure": {
+    "title": "Hạ tầng & Chiến lược Cloud",
+    "cloudAdoption": {
+      "title": "Áp dụng Cloud",
+      "providers": "Nhà cung cấp Cloud chính",
+      "spend": "Chi tiêu Cloud hàng năm (USD)",
+      "workloadPercent": "% Khối lượng công việc trên Cloud"
+    },
+    "network": {
+      "title": "Hạ tầng Mạng",
+      "vendor": "Nhà cung cấp Mạng lõi",
+      "bandwidth": "Băng thông Internet (Gbps)",
+      "wifi": "Chuẩn Wi-Fi",
+      "sdwan": "Triển khai SD-WAN"
+    },
+    "virtualization": "Nền tảng Ảo hóa"
+  },
+  "security": {
+    "title": "Bảo mật & Tuân thủ",
+    "framework": "Khung Bảo mật",
+    "reporting": "Lãnh đạo Bảo mật Báo cáo cho",
+    "compliance": "Yêu cầu Tuân thủ",
+    "tools": {
+      "title": "Công cụ & Giải pháp Bảo mật",
+      "endpoint": "Bảo vệ Endpoint",
+      "siem": "SIEM",
+      "iam": "Quản lý Danh tính & Truy cập",
+      "firewall": "Tường lửa/Bảo mật Mạng"
+    },
+    "mfa": "Triển khai MFA",
+    "training": "Đào tạo Nhận thức Bảo mật",
+    "options": {
+      "mfa": {
+        "universal": "Toàn bộ (Tất cả Người dùng)",
+        "staff": "Chỉ Nhân viên/Giảng viên",
+        "selective": "Hệ thống Chọn lọc",
+        "pilot": "Giai đoạn Thí điểm",
+        "none": "Chưa Triển khai"
+      },
+      "training": {
+        "annual_mandatory": "Bắt buộc Hàng năm",
+        "quarterly": "Hàng quý",
+        "ad_hoc": "Theo yêu cầu",
+        "none": "Không có"
+      }
+    }
+  },
+  "financial": {
+    "title": "Dữ liệu Tài chính CNTT",
+    "note": "Tất cả dữ liệu tài chính nên phản ánh năm tài chính hoàn thành gần nhất",
+    "totalBudget": "Tổng Ngân sách CNTT Hàng năm (USD)",
+    "breakdown": {
+      "title": "Phân bổ Ngân sách theo Danh mục",
+      "personnel": "Nhân sự (Lương, Phúc lợi, Nhà thầu)",
+      "hardware": "Phần cứng (Máy chủ, Lưu trữ, Mạng, Người dùng cuối)",
+      "software": "Cấp phép Phần mềm",
+      "cloud": "Dịch vụ Cloud (IaaS, PaaS, SaaS)",
+      "telecom": "Viễn thông & Kết nối",
+      "security": "Công cụ & Dịch vụ Bảo mật",
+      "projects": "Dự án & Đầu tư Vốn",
+      "support": "Bảo trì & Hợp đồng Hỗ trợ",
+      "training": "Đào tạo & Phát triển Chuyên môn",
+      "other": "Chi phí Hoạt động Khác"
+    },
+    "metrics": {
+      "title": "Các Chỉ số Tài chính Bổ sung",
+      "budgetPercent": "Ngân sách CNTT (% Tổng Ngân sách Cơ sở)",
+      "costPerStudent": "Chi phí CNTT/Sinh viên (USD)",
+      "costPerEmployee": "Chi phí CNTT/Nhân viên (USD)",
+      "capexOpex": "Tỷ lệ Vốn/Hoạt động"
+    }
+  },
+  "digitization": {
+    "title": "Số hóa Quy trình & Đánh giá Mức độ Trưởng thành Số",
+    "description": "Đánh giá mức độ trưởng thành số của cơ sở (1 = Khởi đầu/Thủ công, 5 = Tối ưu/Tự động)",
+    "studentLifecycle": {
+      "title": "Quy trình Vòng đời Sinh viên",
+      "admissions": "Tuyển sinh & Tiếp nhận",
+      "enrollment": "Nhập học & Đăng ký",
+      "academic": "Hoạt động Học thuật",
+      "studentServices": "Dịch vụ Sinh viên",
+      "alumni": "Quan hệ Cựu sinh viên"
+    },
+    "academicAdmin": {
+      "title": "Quản trị Học thuật",
+      "curriculum": "Quản lý Chương trình",
+      "quality": "Đảm bảo Chất lượng",
+      "library": "Dịch vụ Thư viện",
+      "research": "Quản trị Nghiên cứu"
+    },
+    "backOffice": {
+      "title": "Hoạt động Văn phòng",
+      "finance": "Tài chính & Kế toán",
+      "hr": "Nhân sự",
+      "procurement": "Mua sắm",
+      "facilities": "Quản lý Cơ sở vật chất"
+    },
+    "maturityRatings": {
+      "1": "1 - Thủ công",
+      "2": "2 - Cơ bản",
+      "3": "3 - Đang phát triển",
+      "4": "4 - Được quản lý",
+      "5": "5 - Tối ưu hóa"
+    },
+    "overallScores": {
+      "title": "Điểm Trưởng thành Số Tổng thể",
+      "processDigitization": "Số hóa Quy trình (1-5)",
+      "dataMaturity": "Trưởng thành Dữ liệu & Phân tích (1-5)",
+      "itOperations": "Trưởng thành Vận hành CNTT (1-5)"
+    },
+    "painPoints": "Điểm Đau Chính & Cơ hội Quick Win"
+  }
+}
+
