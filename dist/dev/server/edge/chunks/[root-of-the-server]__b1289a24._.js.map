@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 16, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/My_files/Master files/RnD/105-survey-001-20251224/itsm-survey/src/lib/i18n/config.ts"],"sourcesContent":["/**\n * i18n Configuration\n * Defines supported locales and default locale\n */\n\nexport const locales = ['vi', 'en'] as const;\nexport type Locale = (typeof locales)[number];\n\nexport const defaultLocale: Locale = 'vi';\n\nexport const localeNames: Record<Locale, string> = {\n  vi: 'Tiếng Việt',\n  en: 'English'\n};\n\nexport const localeFlags: Record<Locale, string> = {\n  vi: '🇻🇳',\n  en: '🇬🇧'\n};\n\n"],"names":[],"mappings":"AAAA;;;CAGC;;;;;;;;;;AAEM,MAAM,UAAU;IAAC;IAAM;CAAK;AAG5B,MAAM,gBAAwB;AAE9B,MAAM,cAAsC;IACjD,IAAI;IACJ,IAAI;AACN;AAEO,MAAM,cAAsC;IACjD,IAAI;IACJ,IAAI;AACN"}},
-    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/My_files/Master files/RnD/105-survey-001-20251224/itsm-survey/src/middleware.ts"],"sourcesContent":["import createMiddleware from 'next-intl/middleware';\nimport { locales, defaultLocale } from '@/lib/i18n/config';\n\nexport default createMiddleware({\n  locales,\n  defaultLocale,\n  localePrefix: 'always'\n});\n\nexport const config = {\n  matcher: ['/', '/(vi|en)/:path*']\n};\n\n"],"names":[],"mappings":";;;;;;AAAA;AACA;;;uCAEe,IAAA,mSAAgB,EAAC;IAC9B,SAAA,yOAAO;IACP,eAAA,+OAAa;IACb,cAAc;AAChB;AAEO,MAAM,SAAS;IACpB,SAAS;QAAC;QAAK;KAAkB;AACnC"}}]
-}
