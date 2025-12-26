@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { SurveyFormData, createInitialFormData } from '@/types/survey';
+import { ValidationError, validateSection, getFieldError } from '@/lib/validations/sectionValidation';
 
 const STORAGE_KEY = 'itsm-survey-data';
 const AUTO_SAVE_DELAY = 30000; // 30 seconds
@@ -9,6 +10,7 @@ const AUTO_SAVE_DELAY = 30000; // 30 seconds
 interface UseSurveyFormOptions {
   surveyId?: string;
   initialData?: Partial<SurveyFormData>;
+  locale?: string;
 }
 
 interface UseSurveyFormReturn {
@@ -17,10 +19,14 @@ interface UseSurveyFormReturn {
   completedSections: Set<number>;
   isSaving: boolean;
   lastSaved: Date | null;
+  validationErrors: ValidationError[];
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
   setCurrentSection: (section: number) => void;
-  markSectionComplete: (section: number) => void;
+  markSectionComplete: (section: number) => boolean;
+  validateCurrentSection: () => boolean;
+  getFieldError: (fieldName: string) => string | undefined;
+  clearValidationErrors: () => void;
   saveData: () => Promise<void>;
   exportData: () => void;
   resetForm: () => void;
@@ -30,7 +36,9 @@ interface UseSurveyFormReturn {
  * Custom hook for managing survey form state with auto-save
  */
 export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyFormReturn {
-  const { surveyId, initialData } = options;
+  const { surveyId, initialData, locale = 'vi' } = options;
+  
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   
   const [formData, setFormData] = useState<SurveyFormData>(() => {
     // Try to load from localStorage on initial mount
@@ -190,11 +198,35 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     hasChangesRef.current = true;
   }, []);
 
-  // Mark section as complete
-  const markSectionComplete = useCallback((section: number) => {
-    setCompletedSections(prev => new Set([...prev, section]));
-    hasChangesRef.current = true;
+  // Validate current section
+  const validateCurrentSection = useCallback(() => {
+    const result = validateSection(currentSection, formData, locale);
+    setValidationErrors(result.errors);
+    return result.isValid;
+  }, [currentSection, formData, locale]);
+
+  // Clear validation errors
+  const clearValidationErrors = useCallback(() => {
+    setValidationErrors([]);
   }, []);
+
+  // Get error for specific field
+  const getFieldErrorFn = useCallback((fieldName: string) => {
+    return getFieldError(validationErrors, fieldName);
+  }, [validationErrors]);
+
+  // Mark section as complete (with validation)
+  const markSectionComplete = useCallback((section: number): boolean => {
+    const result = validateSection(section, formData, locale);
+    setValidationErrors(result.errors);
+    
+    if (result.isValid) {
+      setCompletedSections(prev => new Set([...prev, section]));
+      hasChangesRef.current = true;
+      return true;
+    }
+    return false;
+  }, [formData, locale]);
 
   // Export data as JSON
   const exportData = useCallback(() => {
@@ -227,10 +259,14 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     completedSections,
     isSaving,
     lastSaved,
+    validationErrors,
     updateFormData,
     updateNestedData,
     setCurrentSection,
     markSectionComplete,
+    validateCurrentSection,
+    getFieldError: getFieldErrorFn,
+    clearValidationErrors,
     saveData,
     exportData,
     resetForm

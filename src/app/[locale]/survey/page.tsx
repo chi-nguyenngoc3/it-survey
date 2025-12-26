@@ -37,13 +37,16 @@ export default function SurveyPage() {
     completedSections,
     isSaving,
     lastSaved,
+    validationErrors,
     updateFormData,
     updateNestedData,
     setCurrentSection,
     markSectionComplete,
+    clearValidationErrors,
+    getFieldError,
     saveData,
     exportData
-  } = useSurveyForm();
+  } = useSurveyForm({ locale });
 
   const progress = Math.round((completedSections.size / SURVEY_SECTIONS.length) * 100);
 
@@ -51,7 +54,8 @@ export default function SurveyPage() {
     const commonProps = {
       formData,
       updateFormData,
-      updateNestedData
+      updateNestedData,
+      getFieldError
     };
 
     switch (currentSection) {
@@ -84,21 +88,29 @@ export default function SurveyPage() {
 
   const handlePrevious = () => {
     if (currentSection > 0) {
+      clearValidationErrors();
       setCurrentSection(currentSection - 1);
     }
   };
 
   const handleNext = () => {
     if (currentSection < SURVEY_SECTIONS.length - 1) {
+      clearValidationErrors();
       setCurrentSection(currentSection + 1);
     }
   };
 
   const handleMarkComplete = () => {
-    markSectionComplete(currentSection);
-    if (currentSection < SURVEY_SECTIONS.length - 1) {
+    const isValid = markSectionComplete(currentSection);
+    if (isValid && currentSection < SURVEY_SECTIONS.length - 1) {
       setCurrentSection(currentSection + 1);
     }
+  };
+
+  // Clear validation errors when changing sections
+  const handleSectionChange = (section: number) => {
+    clearValidationErrors();
+    setCurrentSection(section);
   };
 
   return (
@@ -175,9 +187,28 @@ export default function SurveyPage() {
             sections={SURVEY_SECTIONS}
             currentSection={currentSection}
             completedSections={completedSections}
-            onSectionChange={setCurrentSection}
+            onSectionChange={handleSectionChange}
           />
         </div>
+
+        {/* Validation Errors Summary */}
+        {validationErrors.length > 0 && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-red-700 mb-2">
+                  {locale === 'vi' ? 'Vui lòng điền các trường bắt buộc:' : 'Please fill in the required fields:'}
+                </h3>
+                <ul className="text-sm text-red-600 space-y-1 list-disc list-inside">
+                  {validationErrors.map((error, index) => (
+                    <li key={index}>{error.message}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Form Content */}
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8 mb-6">

@@ -4,16 +4,19 @@ import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
 import { SurveyFormData } from '@/types/survey';
 import { Building2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
-export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
+export function InstitutionProfile({ formData, updateFormData, getFieldError }: SectionProps) {
   const t = useTranslations();
 
   return (
@@ -36,7 +39,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.institutionName}
             onChange={(e) => updateFormData('institutionName', e.target.value)}
             placeholder={t('survey.placeholders.institutionName')}
+            className={cn(getFieldError?.('institutionName') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('institutionName')} />
         </div>
 
         {/* Institution Type 1 */}
@@ -53,7 +58,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               }
             }}
           >
-            <SelectTrigger>
+            <SelectTrigger className={cn(getFieldError?.('institutionType1') && 'border-red-500')}>
               <SelectValue placeholder={t('common.select')} />
             </SelectTrigger>
             <SelectContent>
@@ -65,6 +70,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               </SelectItem>
             </SelectContent>
           </Select>
+          <FormError message={getFieldError?.('institutionType1')} />
         </div>
 
         {/* Institution Type 2 (conditional) */}
@@ -77,7 +83,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               value={formData.institutionType2}
               onValueChange={(value) => updateFormData('institutionType2', value)}
             >
-              <SelectTrigger className="bg-blue-50">
+              <SelectTrigger className={cn('bg-blue-50', getFieldError?.('institutionType2') && 'border-red-500')}>
                 <SelectValue placeholder={t('common.select')} />
               </SelectTrigger>
               <SelectContent>
@@ -92,6 +98,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
                 </SelectItem>
               </SelectContent>
             </Select>
+            <FormError message={getFieldError?.('institutionType2')} />
           </div>
         )}
 
@@ -104,7 +111,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.institutionType}
             onValueChange={(value) => updateFormData('institutionType', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={cn(getFieldError?.('institutionType') && 'border-red-500')}>
               <SelectValue placeholder={t('common.select')} />
             </SelectTrigger>
             <SelectContent>
@@ -140,6 +147,7 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               </SelectItem>
             </SelectContent>
           </Select>
+          <FormError message={getFieldError?.('institutionType')} />
         </div>
 
         {/* Student Population */}
@@ -153,7 +161,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.studentPopulation}
             onChange={(e) => updateFormData('studentPopulation', e.target.value)}
             placeholder="10000"
+            className={cn(getFieldError?.('studentPopulation') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('studentPopulation')} />
         </div>
 
         {/* Employee Count */}
@@ -167,7 +177,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.employeeCount}
             onChange={(e) => updateFormData('employeeCount', e.target.value)}
             placeholder="500"
+            className={cn(getFieldError?.('employeeCount') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('employeeCount')} />
         </div>
 
         {/* Faculty Count */}
@@ -181,7 +193,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.facultyCount}
             onChange={(e) => updateFormData('facultyCount', e.target.value)}
             placeholder="200"
+            className={cn(getFieldError?.('facultyCount') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('facultyCount')} />
         </div>
 
         {/* Campus Count */}
@@ -208,7 +222,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
             value={formData.fiscalYear}
             onChange={(e) => updateFormData('fiscalYear', e.target.value)}
             placeholder={t('survey.placeholders.fiscalYear')}
+            className={cn(getFieldError?.('fiscalYear') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('fiscalYear')} />
         </div>
       </div>
 
@@ -227,7 +243,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               value={formData.contactName}
               onChange={(e) => updateFormData('contactName', e.target.value)}
               placeholder={t('survey.placeholders.contactName')}
+              className={cn(getFieldError?.('contactName') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('contactName')} />
           </div>
 
           <div className="space-y-2">
@@ -240,7 +258,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               value={formData.contactEmail}
               onChange={(e) => updateFormData('contactEmail', e.target.value)}
               placeholder={t('survey.placeholders.contactEmail')}
+              className={cn(getFieldError?.('contactEmail') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('contactEmail')} />
           </div>
 
           <div className="space-y-2">
@@ -252,7 +272,9 @@ export function InstitutionProfile({ formData, updateFormData }: SectionProps) {
               value={formData.contactRole}
               onChange={(e) => updateFormData('contactRole', e.target.value)}
               placeholder={t('survey.placeholders.contactRole')}
+              className={cn(getFieldError?.('contactRole') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('contactRole')} />
           </div>
         </div>
       </div>

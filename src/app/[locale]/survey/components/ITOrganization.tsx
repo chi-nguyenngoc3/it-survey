@@ -4,16 +4,19 @@ import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
 import { SurveyFormData } from '@/types/survey';
 import { Users } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
-export function ITOrganization({ formData, updateFormData, updateNestedData }: SectionProps) {
+export function ITOrganization({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
 
   const fteCategories = [
@@ -47,7 +50,7 @@ export function ITOrganization({ formData, updateFormData, updateNestedData }: S
             value={formData.itReportingStructure}
             onValueChange={(value) => updateFormData('itReportingStructure', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={cn(getFieldError?.('itReportingStructure') && 'border-red-500')}>
               <SelectValue placeholder={t('common.select')} />
             </SelectTrigger>
             <SelectContent>
@@ -68,6 +71,7 @@ export function ITOrganization({ formData, updateFormData, updateNestedData }: S
               </SelectItem>
             </SelectContent>
           </Select>
+          <FormError message={getFieldError?.('itReportingStructure')} />
         </div>
 
         {/* CIO/CTO Title */}
@@ -94,7 +98,9 @@ export function ITOrganization({ formData, updateFormData, updateNestedData }: S
             value={formData.itStaffCount}
             onChange={(e) => updateFormData('itStaffCount', e.target.value)}
             placeholder="25"
+            className={cn(getFieldError?.('itStaffCount') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('itStaffCount')} />
         </div>
 
         {/* Organizational Model */}
