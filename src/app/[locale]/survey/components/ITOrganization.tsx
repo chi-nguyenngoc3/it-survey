@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { exampleITOrganization } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
@@ -18,6 +20,30 @@ interface SectionProps {
 
 export function ITOrganization({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleITOrganization).forEach(([key, value]) => {
+      if (key === 'itFteBreakdown' && typeof value === 'object') {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData('itFteBreakdown', nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleITOrganization).forEach(([key, value]) => {
+      if (key === 'itFteBreakdown' && typeof value === 'object') {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData('itFteBreakdown', nestedKey, '');
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
 
   const fteCategories = [
     { key: 'leadership', label: t('itOrganization.fteBreakdown.leadership') },
@@ -33,11 +59,14 @@ export function ITOrganization({ formData, updateFormData, updateNestedData, get
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Users className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('itOrganization.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Users className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('itOrganization.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -84,7 +113,9 @@ export function ITOrganization({ formData, updateFormData, updateNestedData, get
             value={formData.cioCtoTitle}
             onChange={(e) => updateFormData('cioCtoTitle', e.target.value)}
             placeholder="e.g., CIO, VP IT, IT Director"
+            className={cn(getFieldError?.('cioCtoTitle') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('cioCtoTitle')} />
         </div>
 
         {/* IT Staff Count */}
@@ -112,7 +143,7 @@ export function ITOrganization({ formData, updateFormData, updateNestedData, get
             value={formData.organizationalModel}
             onValueChange={(value) => updateFormData('organizationalModel', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={cn(getFieldError?.('organizationalModel') && 'border-red-500')}>
               <SelectValue placeholder={t('common.select')} />
             </SelectTrigger>
             <SelectContent>
@@ -127,6 +158,7 @@ export function ITOrganization({ formData, updateFormData, updateNestedData, get
               </SelectItem>
             </SelectContent>
           </Select>
+          <FormError message={getFieldError?.('organizationalModel')} />
         </div>
       </div>
 

@@ -43,47 +43,58 @@
     "sections": {
       "institution": {
         "title": "Thông tin Cơ sở",
-        "description": "Thông tin cơ bản về cơ sở giáo dục của bạn"
+        "description": "Thông tin cơ bản về cơ sở giáo dục của bạn",
+        "tooltip": "Thu thập thông tin cơ bản về tổ chức: tên, loại hình (đại học/trường học), quy mô (sinh viên, nhân viên, giảng viên), số cơ sở, và thông tin liên hệ. Dữ liệu này giúp phân loại và so sánh với các tổ chức tương đương."
       },
       "itOrganization": {
         "title": "Tổ chức & Nhân sự CNTT",
-        "description": "Cấu trúc tổ chức và nguồn nhân lực CNTT"
+        "description": "Cấu trúc tổ chức và nguồn nhân lực CNTT",
+        "tooltip": "Đánh giá cấu trúc tổ chức CNTT theo mô hình Operating Model. Bao gồm: cấu trúc báo cáo (CIO/CTO), phân bổ nhân sự FTE theo chức năng, mô hình tổ chức (tập trung/phân tán/liên bang), và chiến lược outsourcing theo COBIT framework."
       },
       "itProcesses": {
         "title": "Quy trình CNTT & Mức độ Trưởng thành ITSM",
-        "description": "Các quy trình quản lý dịch vụ CNTT"
+        "description": "Các quy trình quản lý dịch vụ CNTT",
+        "tooltip": "Đánh giá quy trình ITSM theo ITIL 4 Framework. Bao gồm: Service Desk (FCR, thời gian xử lý), Change Management, Project Management (Agile/Waterfall/Hybrid), và SDLC practices. Mức trưởng thành đánh giá từ 1 (Initial) đến 5 (Optimized)."
       },
       "applications": {
         "title": "Danh mục Ứng dụng",
-        "description": "Hệ thống ứng dụng doanh nghiệp"
+        "description": "Hệ thống ứng dụng doanh nghiệp",
+        "tooltip": "Khảo sát danh mục ứng dụng theo Application Portfolio Management. Các hệ thống cốt lõi: SIS (Student Information System), LMS (Learning Management System), ERP, HRIS, CRM. Đánh giá vendor, hosting model (on-premise/cloud/hybrid), và mức độ hài lòng."
       },
       "processMapping": {
         "title": "Ma trận Ánh xạ Quy trình-Hệ thống",
-        "description": "Ánh xạ quy trình kinh doanh với hệ thống"
+        "description": "Ánh xạ quy trình kinh doanh với hệ thống",
+        "tooltip": "Xây dựng Process-System Matrix theo Enterprise Architecture. Ánh xạ quy trình nghiệp vụ với hệ thống hỗ trợ (primary/supporting systems), xác định integration gaps, và đánh giá mức độ trưởng thành tích hợp (point-to-point → ESB → API-first)."
       },
       "dataAnalytics": {
         "title": "Dữ liệu & Phân tích",
-        "description": "Năng lực dữ liệu và phân tích"
+        "description": "Năng lực dữ liệu và phân tích",
+        "tooltip": "Đánh giá năng lực Data & Analytics theo DAMA-DMBOK. Bao gồm: Data Warehouse/Data Lake, BI tools, Data Governance maturity, Master Data Management. Đánh giá từ Descriptive → Diagnostic → Predictive → Prescriptive analytics."
       },
       "aiTechnology": {
         "title": "AI & Công nghệ Mới",
-        "description": "Chiến lược và ứng dụng AI"
+        "description": "Chiến lược và ứng dụng AI",
+        "tooltip": "Khảo sát chiến lược AI theo Gartner AI Maturity Model. Các use cases: chatbot, grading automation, predictive analytics, personalized learning. Đánh giá AI governance, ethical AI practices, và mức độ đầu tư vào emerging technologies."
       },
       "infrastructure": {
         "title": "Hạ tầng & Đám mây",
-        "description": "Cơ sở hạ tầng và chiến lược cloud"
+        "description": "Cơ sở hạ tầng và chiến lược cloud",
+        "tooltip": "Đánh giá Infrastructure theo Cloud Maturity Model. Bao gồm: Datacenter strategy, Cloud adoption (IaaS/PaaS/SaaS), multi-cloud approach, Network infrastructure (SD-WAN, Wi-Fi 6), virtualization, và Disaster Recovery capabilities."
       },
       "security": {
         "title": "Bảo mật & Tuân thủ",
-        "description": "Khung bảo mật và tuân thủ quy định"
+        "description": "Khung bảo mật và tuân thủ quy định",
+        "tooltip": "Đánh giá Security Posture theo NIST Cybersecurity Framework. Bao gồm: Security framework adoption (ISO 27001/CIS), compliance (FERPA/GDPR), security tools (SIEM/EDR/IAM), MFA implementation, và security awareness training."
       },
       "financial": {
         "title": "Phân tích Tài chính CNTT",
-        "description": "Ngân sách và chi phí CNTT"
+        "description": "Ngân sách và chi phí CNTT",
+        "tooltip": "Phân tích IT Financial Management theo TBM (Technology Business Management). Bao gồm: Total IT Budget, phân bổ theo danh mục (personnel/hardware/software/cloud), IT cost per student/employee, và CapEx vs OpEx ratio. Benchmark với EDUCAUSE data."
       },
       "digitization": {
         "title": "Số hóa Quy trình & Mức độ Trưởng thành Số",
-        "description": "Đánh giá mức độ số hóa"
+        "description": "Đánh giá mức độ số hóa",
+        "tooltip": "Đánh giá Digital Maturity theo CMM (Capability Maturity Model). Đánh giá từng quy trình: Student Lifecycle, Academic Admin, Back Office. Mức độ từ 1 (Manual/Paper-based) đến 5 (Fully Automated/AI-driven). Xác định pain points và quick wins."
       }
     },
     "fields": {
@@ -229,6 +240,17 @@
       "title": "Quản lý Tài sản",
       "tool": "Công cụ Quản lý Tài sản",
       "cmdbAccuracy": "Độ chính xác CMDB (%)"
+    },
+    "tooltips": {
+      "itilMaturity": "Mức độ trưởng thành ITIL đánh giá khả năng quản lý dịch vụ CNTT theo framework ITIL. Level 1 (Khởi đầu): Quy trình không chính thức, thực hiện theo từng trường hợp. Level 2 (Lặp lại): Quy trình cơ bản được lặp lại nhưng chưa tài liệu hóa. Level 3 (Xác định): Quy trình được tài liệu hóa và tiêu chuẩn hóa. Level 4 (Quản lý): Quy trình được đo lường và kiểm soát. Level 5 (Tối ưu): Quy trình liên tục được cải tiến dựa trên dữ liệu.",
+      "serviceDeskTool": "Phần mềm/nền tảng được sử dụng để quản lý ticket hỗ trợ và yêu cầu dịch vụ CNTT. Ví dụ phổ biến: ServiceNow, Jira Service Management, BMC Remedy, Freshservice, Zendesk.",
+      "monthlyTickets": "Tổng số ticket/yêu cầu hỗ trợ mà Service Desk tiếp nhận trung bình mỗi tháng. Bao gồm cả sự cố (incident) và yêu cầu dịch vụ (service request). Con số này giúp đánh giá khối lượng công việc và nhu cầu hỗ trợ của tổ chức.",
+      "fcr": "First Contact Resolution - Tỷ lệ phần trăm ticket được giải quyết ngay trong lần liên hệ đầu tiên, không cần chuyển tiếp hoặc liên hệ lại. FCR cao (>70%) cho thấy đội ngũ hỗ trợ có năng lực tốt và quy trình hiệu quả. Công thức: (Số ticket giải quyết lần đầu / Tổng số ticket) × 100.",
+      "resolutionTime": "Thời gian trung bình (tính bằng giờ) từ khi ticket được tạo đến khi được giải quyết hoàn toàn. Thời gian này ảnh hưởng trực tiếp đến sự hài lòng của người dùng và năng suất làm việc. Benchmark: <4 giờ (xuất sắc), 4-24 giờ (tốt), >24 giờ (cần cải thiện).",
+      "cabFrequency": "Change Advisory Board (CAB) - Hội đồng Tư vấn Thay đổi họp định kỳ để xem xét, đánh giá và phê duyệt các thay đổi quan trọng trong hệ thống CNTT. Tần suất họp phản ánh mức độ kiểm soát thay đổi và tốc độ triển khai của tổ chức.",
+      "changeSuccessRate": "Tỷ lệ phần trăm các thay đổi được triển khai thành công mà không gây ra sự cố hoặc cần phải rollback. Tỷ lệ cao (>95%) cho thấy quy trình quản lý thay đổi hiệu quả. Công thức: (Số thay đổi thành công / Tổng số thay đổi) × 100.",
+      "assetTool": "Phần mềm được sử dụng để theo dõi, quản lý và kiểm kê tài sản CNTT (phần cứng, phần mềm, license). Ví dụ: ServiceNow ITAM, Lansweeper, Snow Software, Flexera. Công cụ tốt giúp tối ưu chi phí và đảm bảo tuân thủ license.",
+      "cmdbAccuracy": "Configuration Management Database (CMDB) - Tỷ lệ phần trăm dữ liệu cấu hình trong CMDB chính xác và cập nhật. CMDB chính xác (>85%) là nền tảng cho quản lý sự cố, thay đổi và vấn đề hiệu quả. Đo lường bằng cách so sánh dữ liệu CMDB với thực tế qua audit định kỳ."
     }
   },
   "applications": {
@@ -244,6 +266,7 @@
     "lms": {
       "title": "📖 Hệ thống Quản lý Học tập (LMS)",
       "vendor": "Nhà cung cấp/Sản phẩm LMS",
+      "hosting": "Mô hình Lưu trữ",
       "users": "Người dùng Hoạt động",
       "satisfaction": "Mức độ Hài lòng (1-5)"
     },
@@ -256,6 +279,7 @@
     "erp": {
       "title": "💼 Hoạch định Nguồn lực Doanh nghiệp (ERP)",
       "vendor": "Nhà cung cấp/Sản phẩm ERP",
+      "hosting": "Mô hình Lưu trữ",
       "version": "Phiên bản",
       "implementationYear": "Năm Triển khai",
       "modules": "Các Module đã Triển khai"
@@ -312,6 +336,15 @@
         "5": "Cấp 5 - Event-Driven Thời gian thực"
       },
       "activeIntegrations": "Số lượng Tích hợp Đang hoạt động"
+    },
+    "tooltips": {
+      "primarySystem": "Hệ thống chính chịu trách nhiệm xử lý và lưu trữ dữ liệu cho quy trình này. Ví dụ: SIS cho đăng ký khóa học, CRM cho tuyển sinh, LMS cho giảng dạy.",
+      "supportingSystems": "Các hệ thống phụ trợ tích hợp với hệ thống chính để hỗ trợ quy trình. Có thể bao gồm API, Portal, hệ thống báo cáo BI, hoặc các công cụ tự động hóa.",
+      "dataFlow": "Mô tả luồng dữ liệu giữa các hệ thống. Ví dụ: 'Web Form → CRM → SIS → LMS' cho thấy dữ liệu di chuyển từ đâu đến đâu qua các hệ thống.",
+      "integrationChallenges": "Mô tả các thách thức tích hợp cụ thể như: nhập liệu thủ công, đồng bộ dữ liệu chậm, vấn đề chất lượng dữ liệu, thiếu API, hoặc các điểm nghẽn quy trình.",
+      "integrationGaps": "Các khoảng trống tích hợp quan trọng gây ảnh hưởng đến hiệu quả hoạt động. Đánh dấu tất cả các vấn đề tích hợp đang tồn tại trong tổ chức.",
+      "maturityLevel": "Mức độ trưởng thành tích hợp đánh giá kiến trúc tích hợp hệ thống. Cấp 1: Tích hợp thủ công, Point-to-Point. Cấp 2: Script và batch processing cơ bản. Cấp 3: Middleware/Integration Hub tập trung. Cấp 4: Nền tảng tích hợp doanh nghiệp (ESB, iPaaS). Cấp 5: Kiến trúc Event-Driven thời gian thực với API Gateway.",
+      "activeIntegrations": "Tổng số các kết nối tích hợp đang hoạt động giữa các hệ thống (API, ETL, webhook, file transfer, v.v.). Con số này phản ánh độ phức tạp của hệ sinh thái CNTT."
     }
   },
   "dataAnalytics": {
@@ -321,6 +354,7 @@
     "dataGovernance": "Khung Quản trị Dữ liệu",
     "dataLake": "Triển khai Data Lake",
     "masterData": "Quản lý Dữ liệu Chủ",
+    "dataQualityScore": "Điểm Chất lượng Dữ liệu (1-5)",
     "options": {
       "governance": {
         "formal": "Chính thức/Có tài liệu",
@@ -334,6 +368,25 @@
         "planned": "Đã lên kế hoạch",
         "none": "Không có kế hoạch"
       }
+    },
+    "tooltips": {
+      "dataWarehouse": "Nền tảng lưu trữ dữ liệu tập trung được tối ưu hóa cho phân tích và báo cáo. Ví dụ: Snowflake, Amazon Redshift, Google BigQuery, Azure Synapse, Oracle, Teradata. Data warehouse giúp tổng hợp dữ liệu từ nhiều nguồn để phân tích.",
+      "biTool": "Business Intelligence - Công cụ phân tích và trực quan hóa dữ liệu giúp tạo báo cáo và dashboard. Ví dụ phổ biến: Tableau, Power BI, QlikView, Looker. Công cụ BI giúp chuyển đổi dữ liệu thô thành insights có thể hành động.",
+      "dataGovernance": "Khung quản trị dữ liệu xác định chính sách, tiêu chuẩn và quy trình để quản lý dữ liệu trong tổ chức. Bao gồm: quyền sở hữu dữ liệu, chất lượng dữ liệu, bảo mật dữ liệu, và quản lý metadata.",
+      "dataLake": "Kho lưu trữ dữ liệu thô ở định dạng gốc (structured, semi-structured, unstructured) cho phân tích nâng cao và machine learning. Ví dụ: AWS S3, Azure Data Lake, Google Cloud Storage. Khác với data warehouse, data lake lưu dữ liệu chưa xử lý.",
+      "masterData": "Master Data Management (MDM) - Quy trình và công cụ để tạo và duy trì dữ liệu chủ nhất quán (Student, Employee, Course, Vendor). MDM đảm bảo 'single source of truth' cho các thực thể quan trọng trong tổ chức.",
+      "dataQualityScore": "Điểm đánh giá chất lượng dữ liệu tổng thể từ 1-5 dựa trên: Tính chính xác, Tính đầy đủ, Tính nhất quán, Tính kịp thời, và Tính hợp lệ. 1=Rất kém, 2=Kém, 3=Trung bình, 4=Tốt, 5=Xuất sắc."
+    }
+  },
+  "aiTechnology": {
+    "title": "AI & Công nghệ Mới",
+    "tooltips": {
+      "aiStrategy": "Trạng thái chiến lược AI của tổ chức. No strategy: Chưa có kế hoạch AI. Exploring: Đang khám phá cơ hội AI. Developing: Đang xây dựng chiến lược. Implemented: Đã triển khai chiến lược. Mature: Chương trình AI trưởng thành với nhiều use cases production.",
+      "aiSpending": "Tổng chi phí hàng năm cho AI/ML bao gồm: nền tảng cloud AI, license phần mềm, dữ liệu training, và nhân sự AI (nếu tách riêng). Không bao gồm chi phí IT chung đã tính ở phần khác.",
+      "aiPlatforms": "Các nền tảng AI/ML đang sử dụng. Cloud: Azure AI, AWS SageMaker, Google Vertex AI. API: OpenAI, Anthropic, Cohere. Open-source: Hugging Face, LangChain. Enterprise: IBM Watson, Salesforce Einstein.",
+      "aiGovernance": "Khung quản trị AI đảm bảo sử dụng AI có trách nhiệm và đạo đức. Bao gồm: chính sách AI, đánh giá rủi ro, bias detection, tính minh bạch, và tuân thủ quy định (EU AI Act, v.v.).",
+      "aiUseCases": "Các use case AI đang triển khai hoặc có kế hoạch. Chatbot: Hỗ trợ sinh viên/nhân viên. Predictive: Dự đoán tỷ lệ duy trì, điểm số. Automation: Tự động hóa quy trình hành chính, chấm điểm.",
+      "aiInitiatives": "Mô tả các sáng kiến AI hiện tại, thách thức gặp phải (dữ liệu, nhân sự, ngân sách, văn hóa), và kế hoạch tương lai. Thông tin này giúp đánh giá mức độ sẵn sàng AI của tổ chức."
     }
   },
   "infrastructure": {
@@ -351,7 +404,20 @@
       "wifi": "Chuẩn Wi-Fi",
       "sdwan": "Triển khai SD-WAN"
     },
-    "virtualization": "Nền tảng Ảo hóa"
+    "virtualization": "Nền tảng Ảo hóa",
+    "tooltips": {
+      "datacenterStrategy": "Chiến lược datacenter xác định cách tổ chức triển khai và quản lý cơ sở hạ tầng. On-premise: Datacenter nội bộ. Colocation: Thuê không gian tại datacenter bên ngoài. Cloud-first: Ưu tiên cloud cho workload mới. Hybrid: Kết hợp on-premise và cloud. Cloud-only: Toàn bộ trên cloud.",
+      "cloudProviders": "Các nhà cung cấp dịch vụ cloud đang sử dụng. AWS (Amazon), Azure (Microsoft), GCP (Google), OCI (Oracle), IBM Cloud. Có thể sử dụng multi-cloud để tránh vendor lock-in và tối ưu chi phí.",
+      "cloudSpend": "Tổng chi phí cloud hàng năm bao gồm: compute, storage, networking, database, và các dịch vụ managed. Không bao gồm chi phí license phần mềm chạy trên cloud.",
+      "workloadPercent": "Phần trăm khối lượng công việc/ứng dụng đang chạy trên cloud so với tổng thể. 0-25%: Early adopter. 25-50%: Hybrid. 50-75%: Cloud-preferred. >75%: Cloud-native.",
+      "networkVendor": "Nhà cung cấp thiết bị mạng lõi (switches, routers, firewalls). Ví dụ: Cisco, Juniper, Arista, HPE/Aruba, Fortinet. Thường dùng một nhà cung cấp chính để đơn giản hóa quản lý.",
+      "bandwidth": "Tổng băng thông kết nối Internet của tổ chức (Gbps). Bao gồm cả primary và backup links. Benchmark: 1-10 Gbps cho tổ chức vừa, 10-100 Gbps cho tổ chức lớn.",
+      "wifi": "Chuẩn Wi-Fi được triển khai trong campus. Wi-Fi 6E (802.11ax 6GHz): Mới nhất, tốc độ cao nhất. Wi-Fi 6 (802.11ax): Hiệu suất cao. Wi-Fi 5 (802.11ac): Phổ biến. Mixed: Kết hợp nhiều chuẩn.",
+      "sdwan": "Software-Defined WAN - Công nghệ quản lý mạng diện rộng bằng phần mềm, giúp tối ưu routing, bảo mật và hiệu suất giữa các site. Giảm chi phí MPLS, tăng tính linh hoạt.",
+      "virtualization": "Nền tảng ảo hóa server để chạy máy ảo (VMs). Ví dụ: VMware vSphere, Microsoft Hyper-V, KVM, Nutanix AHV, Proxmox. Cho phép tối ưu sử dụng tài nguyên phần cứng.",
+      "backup": "Giải pháp sao lưu dữ liệu và hệ thống. Ví dụ: Veeam, Commvault, Rubrik, Cohesity, Veritas NetBackup. Nên có backup 3-2-1: 3 bản sao, 2 loại media, 1 offsite.",
+      "drSite": "Disaster Recovery Site - Vị trí khôi phục sau thảm họa. Có thể là datacenter thứ hai, cloud DR (Azure Site Recovery, AWS DRS), hoặc colocation. RTO/RPO phụ thuộc vào yêu cầu kinh doanh."
+    }
   },
   "security": {
     "title": "Bảo mật & Tuân thủ",
@@ -381,6 +447,19 @@
         "ad_hoc": "Theo yêu cầu",
         "none": "Không có"
       }
+    },
+    "tooltips": {
+      "framework": "Khung bảo mật chuẩn được áp dụng để quản lý rủi ro an ninh mạng. NIST: Tiêu chuẩn Mỹ phổ biến. ISO 27001: Tiêu chuẩn quốc tế. CIS Controls: 18 kiểm soát ưu tiên. Custom: Khung tự xây dựng dựa trên nhiều nguồn.",
+      "reporting": "Cấu trúc báo cáo của lãnh đạo bảo mật (CISO). Báo cáo trực tiếp cho CIO phổ biến nhất. Báo cáo cho CEO/President cho thấy bảo mật được ưu tiên cao. Báo cáo cho CFO thường liên quan đến compliance.",
+      "compliance": "Các tiêu chuẩn tuân thủ bắt buộc hoặc tự nguyện. FERPA: Bảo vệ dữ liệu sinh viên (Mỹ). GDPR: Bảo vệ dữ liệu cá nhân (EU). HIPAA: Dữ liệu y tế. PCI-DSS: Thanh toán thẻ. SOC 2: Kiểm soát dịch vụ.",
+      "endpoint": "Giải pháp bảo vệ thiết bị đầu cuối (laptop, desktop, mobile). EDR/XDR hiện đại như CrowdStrike, SentinelOne, Microsoft Defender. Antivirus truyền thống không còn đủ với các mối đe dọa hiện tại.",
+      "siem": "Security Information & Event Management - Thu thập, phân tích log bảo mật từ nhiều nguồn để phát hiện mối đe dọa. Ví dụ: Splunk, Microsoft Sentinel, IBM QRadar. SIEM là trung tâm của Security Operations Center (SOC).",
+      "iam": "Identity & Access Management - Quản lý danh tính và quyền truy cập. Bao gồm SSO (Single Sign-On), MFA, Privileged Access Management. Ví dụ: Okta, Azure AD, Duo, Ping Identity.",
+      "firewall": "Tường lửa thế hệ mới (NGFW) bảo vệ mạng với khả năng phát hiện ứng dụng, IPS, và URL filtering. Ví dụ: Palo Alto, Fortinet, Check Point, Cisco Firepower.",
+      "mfa": "Multi-Factor Authentication - Xác thực đa yếu tố tăng cường bảo mật. Universal: Tất cả người dùng. Staff only: Chỉ nhân viên. Selective: Hệ thống quan trọng. MFA giảm đáng kể rủi ro từ credential theft.",
+      "training": "Chương trình đào tạo nhận thức bảo mật cho người dùng. Bao gồm phishing simulation, password hygiene, social engineering awareness. Đào tạo thường xuyên giảm rủi ro từ human error.",
+      "lastAudit": "Ngày kiểm toán bảo mật gần nhất bởi bên thứ ba hoặc nội bộ. Kiểm toán nên được thực hiện hàng năm. Bao gồm penetration testing, vulnerability assessment, compliance audit.",
+      "incidents": "Số sự cố bảo mật nghiêm trọng trong 12 tháng qua. Bao gồm: ransomware, data breach, phishing thành công, unauthorized access. Con số này giúp đánh giá hiệu quả của chương trình bảo mật."
     }
   },
   "financial": {
@@ -406,6 +485,18 @@
       "costPerStudent": "Chi phí CNTT/Sinh viên (USD)",
       "costPerEmployee": "Chi phí CNTT/Nhân viên (USD)",
       "capexOpex": "Tỷ lệ Vốn/Hoạt động"
+    },
+    "tooltips": {
+      "totalBudget": "Tổng ngân sách CNTT hàng năm bao gồm tất cả chi phí: nhân sự, phần cứng, phần mềm, cloud, dịch vụ, dự án. Không bao gồm chi phí CNTT ẩn trong các phòng ban khác. Benchmark: 3-6% tổng ngân sách tổ chức.",
+      "breakdown": "Phân bổ ngân sách theo danh mục giúp phân tích cơ cấu chi phí. Có thể nhập giá trị tuyệt đối (USD) hoặc phần trăm (%). Tổng các danh mục nên bằng 100% hoặc tổng ngân sách.",
+      "personnel": "Chi phí nhân sự CNTT bao gồm: lương, phúc lợi, bảo hiểm, và chi phí nhà thầu/consultant. Thường chiếm 30-50% ngân sách CNTT. Benchmark EDUCAUSE: ~38%.",
+      "hardware": "Chi phí phần cứng bao gồm: servers, storage, networking equipment, và end-user devices (laptops, desktops, mobile). Xu hướng giảm khi chuyển sang cloud.",
+      "software": "Chi phí license phần mềm bao gồm: enterprise applications (ERP, SIS, LMS), productivity tools (Microsoft 365), và các phần mềm chuyên dụng. Xu hướng tăng với mô hình SaaS.",
+      "cloud": "Chi phí dịch vụ cloud bao gồm IaaS (compute, storage), PaaS (database, AI services), và SaaS (applications). Xu hướng tăng nhanh trong giáo dục.",
+      "budgetPercent": "Tỷ lệ ngân sách CNTT so với tổng ngân sách tổ chức. Benchmark giáo dục: 3-6%. Higher Education: 4-7%. Tỷ lệ thấp có thể chỉ ra đầu tư chưa đủ cho CNTT.",
+      "costPerStudent": "Chi phí CNTT trung bình trên mỗi sinh viên. Công thức: Tổng ngân sách IT / Tổng số sinh viên. Benchmark EDUCAUSE: $500-$1,200/sinh viên tùy loại hình.",
+      "costPerEmployee": "Chi phí CNTT trung bình trên mỗi nhân viên. Công thức: Tổng ngân sách IT / Tổng số nhân viên. Benchmark: $3,000-$5,000/nhân viên. Phản ánh mức đầu tư vào năng suất.",
+      "capexOpex": "Tỷ lệ Capital Expenditure (mua tài sản) so với Operational Expenditure (chi phí vận hành). Xu hướng dịch chuyển từ CapEx sang OpEx với cloud và SaaS. Benchmark: 30/70 đến 20/80."
     }
   },
   "digitization": {
@@ -446,7 +537,26 @@
       "dataMaturity": "Trưởng thành Dữ liệu & Phân tích (1-5)",
       "itOperations": "Trưởng thành Vận hành CNTT (1-5)"
     },
-    "painPoints": "Điểm Đau Chính & Cơ hội Quick Win"
+    "painPoints": "Điểm Đau Chính & Cơ hội Quick Win",
+    "tooltips": {
+      "admissions": "Đánh giá mức độ số hóa quy trình tuyển sinh: Xử lý hồ sơ, CRM theo dõi học viên tiềm năng, giao tiếp tự động, đánh giá hồ sơ. 1=Thủ công hoàn toàn, 5=Tự động và tích hợp hoàn toàn.",
+      "enrollment": "Đánh giá quy trình nhập học và đăng ký: Đăng ký khóa học online, xử lý thanh toán điện tử, tự động hóa approval. 1=Giấy tờ thủ công, 5=Self-service hoàn toàn.",
+      "academic": "Đánh giá hoạt động học thuật: Quản lý điểm số, transcript điện tử, xếp lịch học tự động, theo dõi tiến độ học tập. 1=Sổ điểm giấy, 5=Real-time analytics.",
+      "studentServices": "Đánh giá dịch vụ sinh viên: Tư vấn học tập online, hỗ trợ tài chính, dịch vụ hướng nghiệp, hệ thống ticket. 1=Walk-in chỉ, 5=Omnichannel support.",
+      "alumni": "Đánh giá quan hệ cựu sinh viên: Cơ sở dữ liệu alumni, chiến dịch gây quỹ, event management, networking platform. 1=Không có hệ thống, 5=Engagement platform tích hợp.",
+      "curriculum": "Đánh giá quản lý chương trình học: Thiết kế chương trình, approval workflow, syllabus management, learning outcomes. 1=Word/Excel, 5=Curriculum management system.",
+      "quality": "Đánh giá đảm bảo chất lượng: Quy trình kiểm định, thu thập feedback, assessment tracking, compliance reporting. 1=Thủ công, 5=Continuous quality monitoring.",
+      "library": "Đánh giá dịch vụ thư viện: Tài nguyên số, hệ thống mượn trả, nghiên cứu online, liên thư viện. 1=Thư viện truyền thống, 5=Digital library services.",
+      "research": "Đánh giá quản trị nghiên cứu: Grant management, research data, publication tracking, collaboration tools. 1=Không có hệ thống, 5=Research information system.",
+      "finance": "Đánh giá tài chính kế toán: ERP tài chính, budget management, accounts payable/receivable, financial reporting. 1=Sổ sách thủ công, 5=Real-time financial analytics.",
+      "hr": "Đánh giá quy trình nhân sự: Tuyển dụng online, onboarding số, quản lý lương, đánh giá hiệu suất. 1=Hồ sơ giấy, 5=HCM cloud platform.",
+      "procurement": "Đánh giá mua sắm: E-procurement, vendor management, PO automation, contract lifecycle. 1=Thủ công, 5=Procurement analytics.",
+      "facilities": "Đánh giá quản lý cơ sở: Space management, work order system, asset tracking, sustainability monitoring. 1=Không có hệ thống, 5=Smart building platform.",
+      "processDigitization": "Điểm tổng hợp đánh giá mức độ số hóa các quy trình nghiệp vụ. Tính trung bình các đánh giá riêng lẻ. 1.0-2.0: Cần cải thiện gấp. 3.0-4.0: Đang phát triển. 4.0-5.0: Tiên tiến.",
+      "dataMaturity": "Điểm đánh giá mức độ trưởng thành về dữ liệu và phân tích. Bao gồm: data governance, data quality, analytics capability, data-driven decisions. 1=Ad-hoc, 5=Predictive/Prescriptive.",
+      "itOperations": "Điểm đánh giá mức độ trưởng thành vận hành CNTT. Bao gồm: service management, automation, monitoring, incident response. 1=Reactive, 5=AIOps & full automation.",
+      "painPoints": "Mô tả các điểm đau chính trong quy trình hiện tại và các cơ hội quick win. Quick wins: Cải tiến nhanh, chi phí thấp, tác động cao. Giúp xác định ưu tiên cho transformation roadmap."
+    }
   }
 }
 

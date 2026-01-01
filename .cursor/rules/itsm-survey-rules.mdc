@@ -1,0 +1,525 @@
+---
+description: Comprehensive coding standards and conventions for ITSM Survey Next.js application
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
+alwaysApply: true
+---
+
+# ITSM Survey Project - Coding Standards and Conventions
+
+## Project Overview
+
+This is a Next.js 16 survey application for IT Service Management data collection in educational institutions. The app supports Vietnamese and English languages using next-intl. The application collects comprehensive IT operational data across 11 survey sections covering institution profile, IT organization, processes, applications, infrastructure, security, and financial analysis.
+
+## Technology Stack
+
+- **Framework**: Next.js 16.1.1 (App Router)
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Radix UI primitives with custom styling (shadcn/ui)
+- **i18n**: next-intl for internationalization
+- **Validation**: Zod schemas
+- **State Management**: React hooks (useState, useCallback, useEffect, custom hooks)
+- **Database**: Supabase (optional, falls back to localStorage) - migrating to Google Sheets API
+- **Font**: Be Vietnam Pro (optimized for Vietnamese typography)
+
+## Code Style Guidelines
+
+### TypeScript
+
+- Always use TypeScript with strict type checking
+- Prefer `interface` over `type` for object shapes
+- Use `as const` for literal types and readonly arrays
+- Export types/interfaces explicitly when used across files
+- Use proper generic types for reusable components
+- Define interfaces in `src/types/` directory
+- Use `export interface` for type definitions
+
+**Example from `src/types/survey.ts`:**
+```typescript
+export interface SurveyFormData {
+  institutionName: string;
+  contactEmail: string;
+  // ... nested interfaces for complex structures
+  itFteBreakdown: ITFteBreakdown;
+}
+```
+
+### Component Structure
+
+- Use `'use client'` directive for client components
+- Place components in appropriate directories:
+  - `/src/components/ui/` - Reusable UI primitives
+  - `/src/components/` - Feature components (Header, Footer, etc.)
+  - `/src/app/[locale]/survey/components/` - Survey-specific components
+- Follow the pattern: imports → types → component → exports
+- Use functional components with hooks
+- Props interfaces defined inline or in types file
+- Use `useTranslations()` and `useLocale()` from next-intl
+
+**Example component structure:**
+```typescript
+'use client';
+
+import { useTranslations } from 'next-intl';
+import { SurveyFormData } from '@/types/survey';
+
+interface SectionProps {
+  formData: SurveyFormData;
+  updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
+  updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
+}
+
+export function InstitutionProfile({ formData, updateFormData, getFieldError }: SectionProps) {
+  const t = useTranslations();
+  // Component implementation
+}
+```
+
+### File Naming
+
+- Components: PascalCase (e.g., `InstitutionProfile.tsx`)
+- Utilities: camelCase (e.g., `useSurveyForm.ts`)
+- Types: camelCase (e.g., `survey.ts`)
+- Constants: UPPER_SNAKE_CASE (e.g., `AUTO_SAVE_DELAY`, `STORAGE_KEY`)
+- Documentation: Sequence prefix + timestamp suffix (e.g., `001-project-overview-20251224-1200.md`)
+- Tests: Descriptive name with `.test.ts` or `.spec.ts` extension (e.g., `useSurveyForm.test.ts`)
+
+### Documentation Files
+
+- **Location**: All documentation files must be placed in `/docs/` folder
+- **Naming Convention**: `{sequence}-{descriptive-name}-{YYYYMMDD}-{HHMM}.md`
+  - Sequence: 3-digit number (001, 002, 003, etc.) for ordering
+  - Descriptive name: kebab-case description of the document
+  - Date: YYYYMMDD format (e.g., 20251224)
+  - Time: HHMM format in 24-hour (e.g., 1200 for 12:00 PM)
+  - Example: `001-project-overview-20251224-1200.md`
+- **Purpose**: Use for project documentation, planning, architecture decisions, meeting notes, etc.
+- **Structure**: Include frontmatter with title, date, author if needed
+
+### Test Files
+
+- **Location**: All test files must be placed in `/tests/` folder
+- **Naming Convention**: Match the source file name with `.test.ts` or `.spec.ts` suffix
+  - Example: Source file `useSurveyForm.ts` → Test file `tests/useSurveyForm.test.ts`
+  - Example: Component `InstitutionProfile.tsx` → Test file `tests/InstitutionProfile.test.tsx`
+- **Organization**: Mirror the source directory structure in `/tests/`
+  - Example: `/src/hooks/useSurveyForm.ts` → `/tests/hooks/useSurveyForm.test.ts`
+- **Test Framework**: Use appropriate testing framework (Jest, Vitest, etc.)
+- **Coverage**: Aim for comprehensive coverage of critical functionality
+
+### i18n Best Practices
+
+- Always use `useTranslations()` hook for text content
+- Never hardcode Vietnamese or English text
+- Use translation keys from `messages/vi.json` and `messages/en.json`
+- Translation keys follow pattern: `section.subsection.field`
+- Support both languages in all user-facing text
+- Use `useLocale()` to get current locale when needed for conditional logic
+
+**Example:**
+```typescript
+const t = useTranslations();
+const locale = useLocale();
+
+<h1>{t('header.title')}</h1>
+<p>{t('header.subtitle')}</p>
+
+// For arrays
+{(t.raw('survey.guidelines.items') as string[]).map((item, index) => (
+  <li key={index}>{item}</li>
+))}
+```
+
+### Form Validation
+
+- Use Zod schemas in `/src/lib/validations/`
+- Validate on submit, not on blur
+- Display validation errors inline below fields
+- Show error summary banner at top of form when validation fails
+- Use `FormError` component for consistent error display
+- Validation errors should be bilingual (Vietnamese/English)
+- Use `validateSection()` function for section validation
+- Return `ValidationError[]` array with field names and messages
+- Validate before marking sections complete
+- Support locale-aware error messages
+
+**Example from `src/lib/validations/sectionValidation.ts`:**
+```typescript
+export interface ValidationError {
+  field: string;
+  message: string;
+}
+
+export function validateSection(
+  sectionIndex: number,
+  formData: SurveyFormData,
+  locale: string = 'vi'
+): SectionValidationResult {
+  const errors: ValidationError[] = [];
+  const messages = {
+    required: locale === 'vi' ? 'Trường này là bắt buộc' : 'This field is required',
+  };
+  // Validation logic
+  return { isValid: errors.length === 0, errors };
+}
+```
+
+### State Management
+
+- Use custom hooks for complex state logic (e.g., `useSurveyForm`)
+- Persist form data to localStorage for auto-save
+- Clear validation errors when navigating between sections
+- Use `useCallback` for event handlers passed to child components
+- Use `useRef` for values that don't trigger re-renders
+- Auto-save every 30 seconds (AUTO_SAVE_DELAY constant)
+- LocalStorage fallback for persistence
+- Support for both Supabase and local storage modes
+- Validation on section completion
+- Progress tracking with `completedSections` Set
+
+**Example from `src/hooks/useSurveyForm.ts`:**
+```typescript
+const AUTO_SAVE_DELAY = 30000; // 30 seconds
+const STORAGE_KEY = 'itsm-survey-data';
+
+export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyFormReturn {
+  const [formData, setFormData] = useState<SurveyFormData>(() => {
+    // Load from localStorage on mount
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          return { ...createInitialFormData(), ...parsed.formData };
+        } catch {
+          // Ignore parse errors
+        }
+      }
+    }
+    return { ...createInitialFormData(), ...initialData };
+  });
+  
+  // Auto-save effect
+  useEffect(() => {
+    if (hasChangesRef.current) {
+      autoSaveTimeoutRef.current = setTimeout(() => {
+        saveData();
+      }, AUTO_SAVE_DELAY);
+    }
+  }, [formData, saveData]);
+}
+```
+
+### UI Components
+
+- Use Radix UI primitives for accessibility
+- Apply Tailwind classes for styling
+- Follow the design system:
+  - Primary color: `#037236` (green) - use class `bg-primary`
+  - Primary Dark: `#145530` - use class `bg-primary-dark`
+  - Accent: `#F7E6AC` (gold)
+  - Error: `#FF0000` (red)
+  - Background Gray: `#F2F6F4` - use class `bg-background-gray`
+- Use `cn()` utility for conditional class names
+- Ensure all interactive elements have proper focus states
+- Maintain consistent spacing using Tailwind spacing scale
+
+**Example:**
+```typescript
+import { cn } from '@/lib/utils';
+
+<Input
+  className={cn(
+    getFieldError?.('institutionName') && 'border-red-500 focus-visible:border-red-500'
+  )}
+/>
+```
+
+### API Routes
+
+- Place API routes in `/src/app/api/`
+- Use Next.js Route Handlers (not Pages API)
+- Validate request bodies with Zod schemas
+- Return consistent response format: `{ success: boolean, data?: T, error?: string }`
+- Handle errors gracefully with try-catch
+- Support both Supabase and localStorage fallback modes
+- Use `NextRequest` and `NextResponse` for API routes
+- Return appropriate HTTP status codes
+- Support both Supabase and future Google Sheets backends
+
+**Example from `src/app/api/survey/route.ts`:**
+```typescript
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET() {
+  try {
+    const supabase = createServerClient();
+    
+    if (!supabase) {
+      return NextResponse.json({
+        success: true,
+        data: [],
+        message: 'Supabase not configured. Using local storage mode.'
+      });
+    }
+
+    const { data, error } = await supabase
+      .from('survey_responses')
+      .select('*')
+      .order('updated_at', { ascending: false });
+
+    if (error) {
+      return NextResponse.json(
+        { success: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true, data });
+  } catch (error) {
+    console.error('Error fetching surveys:', error);
+    return NextResponse.json(
+      { success: false, error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+```
+
+### Component Props
+
+- Use TypeScript interfaces for props
+- Prefix optional props with `?`
+- Use descriptive prop names
+- Pass `getFieldError` function to form components for validation display
+- Use `SectionProps` interface pattern for survey components
+
+**Example:**
+```typescript
+interface SectionProps {
+  formData: SurveyFormData;
+  updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
+  updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
+}
+```
+
+### Accessibility
+
+- Use semantic HTML elements
+- Add proper ARIA labels where needed
+- Ensure keyboard navigation works
+- Maintain focus management in modals/dropdowns
+- Use proper heading hierarchy (h1 → h2 → h3)
+
+### Performance
+
+- Use `React.memo` for expensive components if needed
+- Lazy load heavy components when appropriate
+- Optimize images with Next.js Image component
+- Use `useCallback` and `useMemo` appropriately (don't overuse)
+
+### Error Handling
+
+- Always handle errors in async operations
+- Display user-friendly error messages
+- Log errors to console for debugging
+- Provide fallback UI when data fails to load
+- Use try-catch blocks in async functions
+- Return error responses with `success: false` and error message
+- Provide user-friendly error messages via i18n
+- Validation errors displayed in UI with field-level feedback
+
+### Code Organization
+
+- Group related functionality together
+- Keep components focused and single-purpose
+- Extract reusable logic into custom hooks
+- Place utility functions in `/src/lib/utils.ts`
+- Keep validation schemas separate from components
+- **Documentation**: All markdown documentation files go in `/docs/` with sequence prefix and timestamp suffix
+- **Tests**: All test files go in `/tests/` folder, mirroring source directory structure
+
+### File Organization Rules
+
+- **Components**: `src/components/` (shared) and `src/app/[locale]/survey/components/` (page-specific)
+- **Hooks**: `src/hooks/` - Custom React hooks
+- **Types**: `src/types/` - TypeScript type definitions
+- **Lib**: `src/lib/` - Utility functions, validations, clients
+- **API Routes**: `src/app/api/` - Next.js API endpoints
+- **Messages**: `messages/` - i18n translation files (vi.json, en.json)
+- **Docs**: `docs/` - Project documentation
+
+## Specific Patterns
+
+### Survey Form Sections
+
+- Each section component receives: `formData`, `updateFormData`, `updateNestedData`, `getFieldError`
+- Use grid layout: `grid grid-cols-1 md:grid-cols-2 gap-6`
+- Required fields marked with `.required` class (shows red asterisk)
+- Section titles use icon + text pattern with border-bottom
+
+**Example:**
+```typescript
+<div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
+  <Building2 className="h-6 w-6 text-primary" />
+  <h2 className="text-2xl font-semibold text-primary">
+    {t('survey.sections.institution.title')}
+  </h2>
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {/* Form fields */}
+</div>
+```
+
+### Language Switching
+
+- Use `router.replace()` instead of `router.push()` to avoid history pollution
+- Preserve form state and current section when switching languages
+- Clear validation errors on language switch
+
+### Dropdown Components
+
+- Use `position="popper"` for SelectContent to prevent overlay issues
+- Set `z-[9999]` for proper layering
+- Match dropdown width to input width (`w-full`)
+- Use `sideOffset={4}` for proper spacing
+
+**Example:**
+```typescript
+<SelectContent position="popper" className="z-[9999]">
+  <SelectItem value="option1">Option 1</SelectItem>
+</SelectContent>
+```
+
+### Form Fields
+
+- Always include `<Label>` with proper `htmlFor` attribute
+- Use `<FormError>` component below fields for validation errors
+- Apply red border class when field has error: `border-red-500`
+- Use placeholder text from translations
+
+**Example:**
+```typescript
+<div className="space-y-2">
+  <Label htmlFor="institutionName" className="required">
+    {t('survey.fields.institutionName')}
+  </Label>
+  <Input
+    id="institutionName"
+    value={formData.institutionName}
+    onChange={(e) => updateFormData('institutionName', e.target.value)}
+    placeholder={t('survey.placeholders.institutionName')}
+    className={cn(getFieldError?.('institutionName') && 'border-red-500')}
+  />
+  <FormError message={getFieldError?.('institutionName')} />
+</div>
+```
+
+### Next.js Patterns
+
+- Use App Router structure (`src/app/[locale]/`)
+- API routes in `src/app/api/` directory
+- Server components by default, client components when needed
+- Locale-based routing with `[locale]` dynamic segment
+
+## Database Patterns
+
+### Current (Supabase)
+
+- Client creation in `src/lib/supabase/client.ts` and `server.ts`
+- Schema defined in `src/lib/supabase/schema.sql`
+- Graceful fallback to localStorage if not configured
+- Use `createServerClient()` for API routes
+
+**Example:**
+```typescript
+import { createServerClient } from '@/lib/supabase/server';
+
+const supabase = createServerClient();
+
+if (!supabase) {
+  // Return mock data if Supabase is not configured
+  return NextResponse.json({
+    success: true,
+    data: [],
+    message: 'Supabase not configured. Using local storage mode.'
+  });
+}
+```
+
+### Future (Google Sheets Integration)
+
+- Service account authentication
+- Client in `src/lib/google-sheets/client.ts` (to be created)
+- Flatten nested JSON for spreadsheet columns
+- Use `googleapis` npm package
+- Row identification: `contactEmail_timestamp`
+- Environment variables: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_SHEET_ID`
+
+**Migration Considerations:**
+- Maintain backward compatibility during migration
+- Support both storage backends during transition
+- Update API routes to use Google Sheets client
+- Remove Supabase dependencies after migration
+- See `planning/001-google-sheets-integration-20251226-1400.md` for detailed migration plan
+
+**Example pattern (future):**
+```typescript
+import { google } from 'googleapis';
+
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  },
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
+
+const sheets = google.sheets({ version: 'v4', auth });
+```
+
+## What NOT to Do
+
+- Don't commit sensitive files (service account JSONs, .env files)
+- Don't hardcode text - always use translations
+- Don't use `any` type - use proper TypeScript types
+- Don't create components without proper TypeScript interfaces
+- Don't skip validation on required fields
+- Don't use inline styles - use Tailwind classes
+- Don't forget to handle loading and error states
+- Don't use `router.push()` for language switching
+- Don't place documentation files outside `/docs/` folder
+- Don't create markdown files without sequence prefix and timestamp suffix
+- Don't place test files outside `/tests/` folder
+- Don't create test files without proper naming convention matching source files
+
+## Testing Considerations
+
+- Test form validation for each section
+- Test language switching preserves state
+- Test auto-save functionality
+- Test error handling and display
+- Test responsive design on mobile/tablet/desktop
+
+## Git Conventions
+
+- Use descriptive commit messages
+- Commit related changes together
+- Don't commit build artifacts (`dist/`, `.next/`)
+- Don't commit sensitive credentials
+
+## Naming Conventions Summary
+
+- **Files**: PascalCase for components (`InstitutionProfile.tsx`), camelCase for utilities (`useSurveyForm.ts`)
+- **Variables**: camelCase (`formData`, `currentSection`)
+- **Constants**: UPPER_SNAKE_CASE (`AUTO_SAVE_DELAY`, `STORAGE_KEY`)
+- **Types/Interfaces**: PascalCase (`SurveyFormData`, `ValidationError`)
+- **Functions**: camelCase (`updateFormData`, `validateSection`)
+- **API Routes**: lowercase with dashes (`/api/survey/[id]`)

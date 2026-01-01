@@ -3,10 +3,13 @@
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Layers } from 'lucide-react';
+import { exampleDigitization } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
@@ -21,6 +24,32 @@ interface ProcessCategory {
 
 export function Digitization({ formData, updateFormData, updateNestedData }: SectionProps) {
   const t = useTranslations();
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleDigitization).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleDigitization).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, '');
+        });
+      } else if (Array.isArray(value)) {
+        updateFormData(key as keyof SurveyFormData, []);
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
 
   const processCategories: ProcessCategory[] = [
     {
@@ -55,11 +84,14 @@ export function Digitization({ formData, updateFormData, updateNestedData }: Sec
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Layers className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('digitization.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Layers className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('digitization.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="info-box mb-6">
@@ -111,7 +143,9 @@ export function Digitization({ formData, updateFormData, updateNestedData }: Sec
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">
-            <Label>{t('digitization.overallScores.processDigitization')}</Label>
+            <LabelWithTooltip tooltip={t('digitization.tooltips.processDigitization')}>
+              {t('digitization.overallScores.processDigitization')}
+            </LabelWithTooltip>
             <Input
               type="number"
               min="1"
@@ -124,7 +158,9 @@ export function Digitization({ formData, updateFormData, updateNestedData }: Sec
           </div>
 
           <div className="space-y-2">
-            <Label>{t('digitization.overallScores.dataMaturity')}</Label>
+            <LabelWithTooltip tooltip={t('digitization.tooltips.dataMaturity')}>
+              {t('digitization.overallScores.dataMaturity')}
+            </LabelWithTooltip>
             <Input
               type="number"
               min="1"
@@ -137,7 +173,9 @@ export function Digitization({ formData, updateFormData, updateNestedData }: Sec
           </div>
 
           <div className="space-y-2">
-            <Label>{t('digitization.overallScores.itOperations')}</Label>
+            <LabelWithTooltip tooltip={t('digitization.tooltips.itOperations')}>
+              {t('digitization.overallScores.itOperations')}
+            </LabelWithTooltip>
             <Input
               type="number"
               min="1"
@@ -153,7 +191,9 @@ export function Digitization({ formData, updateFormData, updateNestedData }: Sec
 
       {/* Pain Points */}
       <div className="space-y-2">
-        <Label>{t('digitization.painPoints')}</Label>
+        <LabelWithTooltip tooltip={t('digitization.tooltips.painPoints')}>
+          {t('digitization.painPoints')}
+        </LabelWithTooltip>
         <Textarea
           value={formData.painPoints}
           onChange={(e) => updateFormData('painPoints', e.target.value)}

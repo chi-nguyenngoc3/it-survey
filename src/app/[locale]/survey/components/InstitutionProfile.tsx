@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { exampleInstitutionProfile } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
@@ -19,13 +21,28 @@ interface SectionProps {
 export function InstitutionProfile({ formData, updateFormData, getFieldError }: SectionProps) {
   const t = useTranslations();
 
+  const handleGenerateExample = () => {
+    Object.entries(exampleInstitutionProfile).forEach(([key, value]) => {
+      updateFormData(key as keyof SurveyFormData, value);
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.keys(exampleInstitutionProfile).forEach((key) => {
+      updateFormData(key as keyof SurveyFormData, '');
+    });
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Building2 className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('survey.sections.institution.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Building2 className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('survey.sections.institution.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

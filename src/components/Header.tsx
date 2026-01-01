@@ -3,7 +3,7 @@
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Info } from 'lucide-react';
 
 interface HeaderProps {
   showProgress?: boolean;
@@ -33,8 +33,17 @@ export function Header({ showProgress = false, progress = 0 }: HeaderProps) {
             </div>
           </Link>
 
-          {/* Right side - Language Switcher */}
+          {/* Right side - Navigation and Language Switcher */}
           <div className="flex items-center gap-4">
+            <Link 
+              href={`/${locale}/about`}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            >
+              <Info className="h-4 w-4" />
+              <span className="hidden sm:inline">
+                {locale === 'vi' ? 'Giới thiệu' : 'About'}
+              </span>
+            </Link>
             <LanguageSwitcher currentLocale={locale} />
           </div>
         </div>

@@ -41,7 +41,8 @@ export default function HomePage() {
   const locale = params.locale as string;
 
   const handleStartSurvey = () => {
-    router.push(`/${locale}/survey`);
+    // Use start=1 parameter to ensure survey starts from section 0 (without clearing data)
+    router.push(`/${locale}/survey?start=1`);
   };
 
   const sections = [

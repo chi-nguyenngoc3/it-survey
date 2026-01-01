@@ -5,7 +5,21 @@ import { SurveyFormData, createInitialFormData } from '@/types/survey';
 import { ValidationError, validateSection, getFieldError } from '@/lib/validations/sectionValidation';
 
 const STORAGE_KEY = 'itsm-survey-data';
+const STORAGE_VERSION = 1;
+const DATA_EXPIRY_HOURS = 72; // 3 days for abandoned drafts
 const AUTO_SAVE_DELAY = 30000; // 30 seconds
+
+/**
+ * Interface for stored survey data with versioning and status
+ */
+interface StoredSurveyData {
+  version: number;
+  savedAt: string;
+  status: 'draft' | 'submitted';
+  formData: SurveyFormData;
+  currentSection: number;
+  completedSections: number[];
+}
 
 interface UseSurveyFormOptions {
   surveyId?: string;
@@ -33,6 +47,64 @@ interface UseSurveyFormReturn {
 }
 
 /**
+ * Validate if stored data is still valid (correct version, not expired, not submitted)
+ */
+function isStoredDataValid(saved: StoredSurveyData): boolean {
+  // Check version compatibility
+  if (saved.version !== STORAGE_VERSION) {
+    console.log('LocalStorage: Version mismatch, clearing data');
+    return false;
+  }
+  
+  // Check if already submitted
+  if (saved.status === 'submitted') {
+    console.log('LocalStorage: Survey was submitted, clearing data');
+    return false;
+  }
+  
+  // Check expiration
+  const savedTime = new Date(saved.savedAt).getTime();
+  const expiryTime = DATA_EXPIRY_HOURS * 60 * 60 * 1000;
+  if (Date.now() - savedTime > expiryTime) {
+    console.log('LocalStorage: Data expired, clearing');
+    return false;
+  }
+  
+  return true;
+}
+
+/**
+ * Load and validate stored survey data from localStorage
+ */
+function loadStoredData(): StoredSurveyData | null {
+  if (typeof window === 'undefined') return null;
+  
+  const saved = localStorage.getItem(STORAGE_KEY);
+  console.log('[useSurveyForm] Loading from localStorage:', saved ? 'found data' : 'no data');
+  if (!saved) return null;
+  
+  try {
+    const parsed = JSON.parse(saved) as StoredSurveyData;
+    console.log('[useSurveyForm] Parsed data - section:', parsed.currentSection, 'status:', parsed.status);
+    
+    // If data is invalid, clear it and return null
+    if (!isStoredDataValid(parsed)) {
+      console.log('[useSurveyForm] Data invalid, clearing');
+      localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    
+    console.log('[useSurveyForm] Data valid, returning section:', parsed.currentSection);
+    return parsed;
+  } catch {
+    // Invalid JSON, clear it
+    console.log('[useSurveyForm] Invalid JSON, clearing');
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+}
+
+/**
  * Custom hook for managing survey form state with auto-save
  */
 export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyFormReturn {
@@ -41,34 +113,16 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
   const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
   
   const [formData, setFormData] = useState<SurveyFormData>(() => {
-    // Try to load from localStorage on initial mount
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          return { ...createInitialFormData(), ...parsed.formData };
-        } catch {
-          // Ignore parse errors
-        }
-      }
+    const storedData = loadStoredData();
+    if (storedData?.formData) {
+      return { ...createInitialFormData(), ...storedData.formData };
     }
     return { ...createInitialFormData(), ...initialData };
   });
 
   const [currentSection, setCurrentSectionState] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          return parsed.currentSection || 0;
-        } catch {
-          // Ignore parse errors
-        }
-      }
-    }
-    return 0;
+    const storedData = loadStoredData();
+    return storedData?.currentSection ?? 0;
   });
 
   // Wrapper to save currentSection to localStorage immediately on change
@@ -78,12 +132,19 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     if (typeof window !== 'undefined') {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        const existing = saved ? JSON.parse(saved) : {};
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        const existing = saved ? JSON.parse(saved) : {
+          version: STORAGE_VERSION,
+          status: 'draft' as const,
+          formData: createInitialFormData(),
+          completedSections: []
+        };
+        const dataToSave: StoredSurveyData = {
           ...existing,
+          version: STORAGE_VERSION,
           currentSection: section,
           savedAt: new Date().toISOString()
-        }));
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
       } catch {
         // Ignore errors
       }
@@ -91,18 +152,8 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
   }, []);
 
   const [completedSections, setCompletedSections] = useState<Set<number>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          return new Set(parsed.completedSections || []);
-        } catch {
-          // Ignore parse errors
-        }
-      }
-    }
-    return new Set();
+    const storedData = loadStoredData();
+    return new Set(storedData?.completedSections ?? []);
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -110,14 +161,16 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
   const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hasChangesRef = useRef(false);
 
-  // Save to localStorage
+  // Save to localStorage with proper schema
   const saveToLocalStorage = useCallback(() => {
     if (typeof window !== 'undefined') {
-      const dataToSave = {
+      const dataToSave: StoredSurveyData = {
+        version: STORAGE_VERSION,
+        savedAt: new Date().toISOString(),
+        status: 'draft',
         formData,
         currentSection,
-        completedSections: Array.from(completedSections),
-        savedAt: new Date().toISOString()
+        completedSections: Array.from(completedSections)
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
     }
@@ -242,15 +295,35 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     URL.revokeObjectURL(url);
   }, [formData]);
 
-  // Reset form
+  // Reset form and clear localStorage
   const resetForm = useCallback(() => {
-    setFormData(createInitialFormData());
-    setCurrentSection(0);
-    setCompletedSections(new Set());
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+    // Clear any pending auto-save first
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+      autoSaveTimeoutRef.current = null;
     }
+    
+    // Reset all state
+    const initialFormData = createInitialFormData();
+    setFormData(initialFormData);
+    setCurrentSectionState(0);
+    setCompletedSections(new Set());
+    setValidationErrors([]);
+    setLastSaved(null);
     hasChangesRef.current = false;
+    
+    // Write fresh data to localStorage (not just clear) to prevent stale reads
+    if (typeof window !== 'undefined') {
+      const freshData: StoredSurveyData = {
+        version: STORAGE_VERSION,
+        savedAt: new Date().toISOString(),
+        status: 'draft',
+        formData: initialFormData,
+        currentSection: 0,
+        completedSections: []
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(freshData));
+    }
   }, []);
 
   return {
@@ -272,4 +345,3 @@ export function useSurveyForm(options: UseSurveyFormOptions = {}): UseSurveyForm
     resetForm
   };
 }
-

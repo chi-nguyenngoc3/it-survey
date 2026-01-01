@@ -2,34 +2,68 @@
 
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { BarChart3 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { exampleDataAnalytics } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
-export function DataAnalytics({ formData, updateFormData, updateNestedData }: SectionProps) {
+export function DataAnalytics({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleDataAnalytics).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleDataAnalytics).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, '');
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <BarChart3 className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('dataAnalytics.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <BarChart3 className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('dataAnalytics.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Data Warehouse */}
         <div className="space-y-2">
-          <Label>{t('dataAnalytics.dataWarehouse')}</Label>
+          <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.dataWarehouse')}>
+            {t('dataAnalytics.dataWarehouse')}
+          </LabelWithTooltip>
           <Input
             value={formData.dataWarehouse.platform || ''}
             onChange={(e) => updateNestedData('dataWarehouse', 'platform', e.target.value)}
@@ -39,17 +73,23 @@ export function DataAnalytics({ formData, updateFormData, updateNestedData }: Se
 
         {/* BI Tool */}
         <div className="space-y-2">
-          <Label>{t('dataAnalytics.biTool')}</Label>
+          <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.biTool')} required>
+            {t('dataAnalytics.biTool')}
+          </LabelWithTooltip>
           <Input
             value={formData.biTool}
             onChange={(e) => updateFormData('biTool', e.target.value)}
             placeholder="e.g., Tableau, Power BI, QlikView"
+            className={cn(getFieldError?.('biTool') && 'border-red-500 focus-visible:border-red-500')}
           />
+          <FormError message={getFieldError?.('biTool')} />
         </div>
 
         {/* Data Governance */}
         <div className="space-y-2">
-          <Label>{t('dataAnalytics.dataGovernance')}</Label>
+          <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.dataGovernance')}>
+            {t('dataAnalytics.dataGovernance')}
+          </LabelWithTooltip>
           <Select
             value={formData.dataGovernance}
             onValueChange={(value) => updateFormData('dataGovernance', value)}
@@ -68,7 +108,9 @@ export function DataAnalytics({ formData, updateFormData, updateNestedData }: Se
 
         {/* Data Lake */}
         <div className="space-y-2">
-          <Label>{t('dataAnalytics.dataLake')}</Label>
+          <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.dataLake')}>
+            {t('dataAnalytics.dataLake')}
+          </LabelWithTooltip>
           <Select
             value={formData.dataLake}
             onValueChange={(value) => updateFormData('dataLake', value)}
@@ -88,9 +130,11 @@ export function DataAnalytics({ formData, updateFormData, updateNestedData }: Se
 
       {/* Master Data Management */}
       <div className="space-y-2">
-        <Label>{t('dataAnalytics.masterData')}</Label>
+        <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.masterData')}>
+          {t('dataAnalytics.masterData')}
+        </LabelWithTooltip>
         <Textarea
-          value={typeof formData.masterData === 'string' ? formData.masterData : ''}
+          value={formData.masterData}
           onChange={(e) => updateFormData('masterData', e.target.value)}
           placeholder="Describe your MDM approach, tools, and domains (Student, HR, Finance, etc.)"
           rows={3}
@@ -99,7 +143,9 @@ export function DataAnalytics({ formData, updateFormData, updateNestedData }: Se
 
       {/* Data Quality Score */}
       <div className="space-y-2 max-w-xs">
-        <Label>Data Quality Score (1-5)</Label>
+        <LabelWithTooltip tooltip={t('dataAnalytics.tooltips.dataQualityScore')}>
+          {t('dataAnalytics.dataQualityScore')}
+        </LabelWithTooltip>
         <Input
           type="number"
           min="1"
@@ -113,4 +159,3 @@ export function DataAnalytics({ formData, updateFormData, updateNestedData }: Se
     </div>
   );
 }
-

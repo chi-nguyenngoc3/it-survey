@@ -43,47 +43,58 @@
     "sections": {
       "institution": {
         "title": "Institution Profile",
-        "description": "Basic information about your educational institution"
+        "description": "Basic information about your educational institution",
+        "tooltip": "Collect basic organizational information: name, type (university/school), size (students, employees, faculty), campus count, and contact details. This data helps categorize and benchmark against peer institutions."
       },
       "itOrganization": {
         "title": "IT Organization & Staffing",
-        "description": "IT organizational structure and human resources"
+        "description": "IT organizational structure and human resources",
+        "tooltip": "Assess IT organizational structure using Operating Model framework. Includes: reporting structure (CIO/CTO), FTE allocation by function, organizational model (centralized/decentralized/federated), and outsourcing strategy based on COBIT framework."
       },
       "itProcesses": {
         "title": "IT Processes & ITSM Maturity",
-        "description": "IT service management processes"
+        "description": "IT service management processes",
+        "tooltip": "Evaluate ITSM processes using ITIL 4 Framework. Covers: Service Desk (FCR, resolution time), Change Management, Project Management (Agile/Waterfall/Hybrid), and SDLC practices. Maturity rated from 1 (Initial) to 5 (Optimized)."
       },
       "applications": {
         "title": "Applications Portfolio",
-        "description": "Enterprise application systems"
+        "description": "Enterprise application systems",
+        "tooltip": "Survey application portfolio using Application Portfolio Management. Core systems: SIS (Student Information System), LMS (Learning Management System), ERP, HRIS, CRM. Assess vendor, hosting model (on-premise/cloud/hybrid), and satisfaction levels."
       },
       "processMapping": {
         "title": "Process-System Mapping Matrix",
-        "description": "Business process to system mapping"
+        "description": "Business process to system mapping",
+        "tooltip": "Build Process-System Matrix using Enterprise Architecture principles. Map business processes to supporting systems (primary/supporting), identify integration gaps, and assess integration maturity (point-to-point → ESB → API-first)."
       },
       "dataAnalytics": {
         "title": "Data & Analytics Capabilities",
-        "description": "Data and analytics capabilities"
+        "description": "Data and analytics capabilities",
+        "tooltip": "Assess Data & Analytics capabilities using DAMA-DMBOK framework. Covers: Data Warehouse/Data Lake, BI tools, Data Governance maturity, Master Data Management. Evaluate from Descriptive → Diagnostic → Predictive → Prescriptive analytics."
       },
       "aiTechnology": {
         "title": "AI & Emerging Technologies",
-        "description": "AI strategy and applications"
+        "description": "AI strategy and applications",
+        "tooltip": "Survey AI strategy using Gartner AI Maturity Model. Use cases: chatbot, grading automation, predictive analytics, personalized learning. Assess AI governance, ethical AI practices, and investment in emerging technologies."
       },
       "infrastructure": {
         "title": "Infrastructure & Cloud",
-        "description": "Infrastructure and cloud strategy"
+        "description": "Infrastructure and cloud strategy",
+        "tooltip": "Evaluate Infrastructure using Cloud Maturity Model. Covers: Datacenter strategy, Cloud adoption (IaaS/PaaS/SaaS), multi-cloud approach, Network infrastructure (SD-WAN, Wi-Fi 6), virtualization, and Disaster Recovery capabilities."
       },
       "security": {
         "title": "Security & Compliance",
-        "description": "Security framework and compliance"
+        "description": "Security framework and compliance",
+        "tooltip": "Assess Security Posture using NIST Cybersecurity Framework. Covers: Security framework adoption (ISO 27001/CIS), compliance (FERPA/GDPR), security tools (SIEM/EDR/IAM), MFA implementation, and security awareness training."
       },
       "financial": {
         "title": "IT Financial Analysis",
-        "description": "IT budget and costs"
+        "description": "IT budget and costs",
+        "tooltip": "Analyze IT Financial Management using TBM (Technology Business Management) framework. Covers: Total IT Budget, allocation by category (personnel/hardware/software/cloud), IT cost per student/employee, and CapEx vs OpEx ratio. Benchmark with EDUCAUSE data."
       },
       "digitization": {
         "title": "Process Digitization & Digital Maturity",
-        "description": "Digital maturity assessment"
+        "description": "Digital maturity assessment",
+        "tooltip": "Assess Digital Maturity using CMM (Capability Maturity Model). Evaluate each process: Student Lifecycle, Academic Admin, Back Office. Maturity from 1 (Manual/Paper-based) to 5 (Fully Automated/AI-driven). Identify pain points and quick wins."
       }
     },
     "fields": {
@@ -229,6 +240,17 @@
       "title": "Asset Management",
       "tool": "Asset Management Tool",
       "cmdbAccuracy": "CMDB Accuracy (%)"
+    },
+    "tooltips": {
+      "itilMaturity": "ITIL maturity level assesses IT service management capability. Level 1 (Initial): Ad-hoc, informal processes. Level 2 (Repeatable): Basic processes are repeated but not documented. Level 3 (Defined): Processes are documented and standardized. Level 4 (Managed): Processes are measured and controlled. Level 5 (Optimizing): Continuous improvement based on data.",
+      "serviceDeskTool": "The software/platform used to manage IT support tickets and service requests. Common examples: ServiceNow, Jira Service Management, BMC Remedy, Freshservice, Zendesk.",
+      "monthlyTickets": "The average total number of tickets/support requests received by the Service Desk each month. Includes both incidents and service requests. This helps assess workload and support demand.",
+      "fcr": "First Contact Resolution - The percentage of tickets resolved on the first contact without escalation or follow-up. High FCR (>70%) indicates capable support team and efficient processes. Formula: (First-contact resolved tickets / Total tickets) × 100.",
+      "resolutionTime": "Average time (in hours) from ticket creation to complete resolution. Directly impacts user satisfaction and productivity. Benchmark: <4 hours (excellent), 4-24 hours (good), >24 hours (needs improvement).",
+      "cabFrequency": "Change Advisory Board (CAB) - A committee that meets regularly to review, evaluate, and approve significant IT system changes. Meeting frequency reflects change control maturity and deployment velocity.",
+      "changeSuccessRate": "The percentage of changes deployed successfully without causing incidents or requiring rollback. High rate (>95%) indicates effective change management. Formula: (Successful changes / Total changes) × 100.",
+      "assetTool": "Software used to track, manage, and inventory IT assets (hardware, software, licenses). Examples: ServiceNow ITAM, Lansweeper, Snow Software, Flexera. Good tools help optimize costs and ensure license compliance.",
+      "cmdbAccuracy": "Configuration Management Database (CMDB) - The percentage of configuration data in the CMDB that is accurate and up-to-date. Accurate CMDB (>85%) is fundamental for effective incident, change, and problem management. Measured by comparing CMDB data against reality through periodic audits."
     }
   },
   "applications": {
@@ -244,6 +266,7 @@
     "lms": {
       "title": "📖 Learning Management System (LMS)",
       "vendor": "LMS Vendor/Product",
+      "hosting": "Hosting Model",
       "users": "Active Users",
       "satisfaction": "User Satisfaction (1-5)"
     },
@@ -256,6 +279,7 @@
     "erp": {
       "title": "💼 Enterprise Resource Planning (ERP)",
       "vendor": "ERP Vendor/Product",
+      "hosting": "Hosting Model",
       "version": "Version",
       "implementationYear": "Implementation Year",
       "modules": "Implemented Modules"
@@ -312,6 +336,15 @@
         "5": "Level 5 - Real-Time Event-Driven"
       },
       "activeIntegrations": "Number of Active Integrations"
+    },
+    "tooltips": {
+      "primarySystem": "The main system responsible for processing and storing data for this process. Examples: SIS for course registration, CRM for recruitment, LMS for course delivery.",
+      "supportingSystems": "Secondary systems that integrate with the primary system to support the process. May include APIs, Portals, BI reporting systems, or automation tools.",
+      "dataFlow": "Describes how data flows between systems. Example: 'Web Form → CRM → SIS → LMS' shows where data moves from and to across systems.",
+      "integrationChallenges": "Describe specific integration challenges such as: manual data entry, delayed data sync, data quality issues, missing APIs, or process bottlenecks.",
+      "integrationGaps": "Critical integration gaps that impact operational efficiency. Check all integration issues currently existing in your organization.",
+      "maturityLevel": "Integration maturity level assesses system integration architecture. Level 1: Manual, Point-to-Point. Level 2: Basic scripts and batch processing. Level 3: Centralized Middleware/Integration Hub. Level 4: Enterprise Integration Platform (ESB, iPaaS). Level 5: Real-time Event-Driven architecture with API Gateway.",
+      "activeIntegrations": "Total number of active integration connections between systems (APIs, ETL, webhooks, file transfers, etc.). This reflects the complexity of the IT ecosystem."
     }
   },
   "dataAnalytics": {
@@ -321,6 +354,7 @@
     "dataGovernance": "Data Governance Framework",
     "dataLake": "Data Lake Implementation",
     "masterData": "Master Data Management",
+    "dataQualityScore": "Data Quality Score (1-5)",
     "options": {
       "governance": {
         "formal": "Formal/Documented",
@@ -334,6 +368,25 @@
         "planned": "Planned",
         "none": "No Plans"
       }
+    },
+    "tooltips": {
+      "dataWarehouse": "A centralized data storage platform optimized for analytics and reporting. Examples: Snowflake, Amazon Redshift, Google BigQuery, Azure Synapse, Oracle, Teradata. Data warehouses aggregate data from multiple sources for analysis.",
+      "biTool": "Business Intelligence - Data analysis and visualization tools for creating reports and dashboards. Common examples: Tableau, Power BI, QlikView, Looker. BI tools transform raw data into actionable insights.",
+      "dataGovernance": "Data governance framework defines policies, standards, and processes for managing data across the organization. Includes: data ownership, data quality, data security, and metadata management.",
+      "dataLake": "A repository storing raw data in its native format (structured, semi-structured, unstructured) for advanced analytics and machine learning. Examples: AWS S3, Azure Data Lake, Google Cloud Storage. Unlike data warehouses, data lakes store unprocessed data.",
+      "masterData": "Master Data Management (MDM) - Processes and tools to create and maintain consistent master data (Student, Employee, Course, Vendor). MDM ensures 'single source of truth' for critical entities across the organization.",
+      "dataQualityScore": "Overall data quality assessment from 1-5 based on: Accuracy, Completeness, Consistency, Timeliness, and Validity. 1=Very Poor, 2=Poor, 3=Average, 4=Good, 5=Excellent."
+    }
+  },
+  "aiTechnology": {
+    "title": "AI & Emerging Technologies",
+    "tooltips": {
+      "aiStrategy": "Organization's AI strategy status. No strategy: No AI plans yet. Exploring: Investigating AI opportunities. Developing: Building AI strategy. Implemented: Strategy deployed. Mature: Established AI program with multiple production use cases.",
+      "aiSpending": "Total annual AI/ML spending including: cloud AI platforms, software licenses, training data, and AI personnel (if tracked separately). Excludes general IT costs counted elsewhere.",
+      "aiPlatforms": "AI/ML platforms in use. Cloud: Azure AI, AWS SageMaker, Google Vertex AI. APIs: OpenAI, Anthropic, Cohere. Open-source: Hugging Face, LangChain. Enterprise: IBM Watson, Salesforce Einstein.",
+      "aiGovernance": "AI governance framework ensuring responsible and ethical AI use. Includes: AI policies, risk assessment, bias detection, transparency, and regulatory compliance (EU AI Act, etc.).",
+      "aiUseCases": "AI use cases deployed or planned. Chatbots: Student/staff support. Predictive: Retention prediction, grade forecasting. Automation: Administrative process automation, automated grading.",
+      "aiInitiatives": "Describe current AI initiatives, challenges faced (data, talent, budget, culture), and future plans. This information helps assess the organization's AI readiness."
     }
   },
   "infrastructure": {
@@ -351,7 +404,20 @@
       "wifi": "Wi-Fi Standard",
       "sdwan": "SD-WAN Implementation"
     },
-    "virtualization": "Virtualization Platform"
+    "virtualization": "Virtualization Platform",
+    "tooltips": {
+      "datacenterStrategy": "Datacenter strategy defines how the organization deploys and manages infrastructure. On-premise: Internal datacenter. Colocation: Rented space at external datacenter. Cloud-first: Prioritize cloud for new workloads. Hybrid: Combined on-premise and cloud. Cloud-only: Fully cloud-based.",
+      "cloudProviders": "Cloud service providers in use. AWS (Amazon), Azure (Microsoft), GCP (Google), OCI (Oracle), IBM Cloud. Multi-cloud can avoid vendor lock-in and optimize costs.",
+      "cloudSpend": "Total annual cloud spending including: compute, storage, networking, database, and managed services. Excludes software license costs running on cloud.",
+      "workloadPercent": "Percentage of workloads/applications running on cloud vs. total. 0-25%: Early adopter. 25-50%: Hybrid. 50-75%: Cloud-preferred. >75%: Cloud-native.",
+      "networkVendor": "Core network equipment vendor (switches, routers, firewalls). Examples: Cisco, Juniper, Arista, HPE/Aruba, Fortinet. Usually one primary vendor for simplified management.",
+      "bandwidth": "Total organization Internet bandwidth (Gbps). Includes primary and backup links. Benchmark: 1-10 Gbps for mid-size, 10-100 Gbps for large organizations.",
+      "wifi": "Wi-Fi standard deployed on campus. Wi-Fi 6E (802.11ax 6GHz): Latest, highest speed. Wi-Fi 6 (802.11ax): High performance. Wi-Fi 5 (802.11ac): Common. Mixed: Multiple standards combined.",
+      "sdwan": "Software-Defined WAN - Technology for managing wide area networks via software, optimizing routing, security, and performance between sites. Reduces MPLS costs, increases flexibility.",
+      "virtualization": "Server virtualization platform for running virtual machines (VMs). Examples: VMware vSphere, Microsoft Hyper-V, KVM, Nutanix AHV, Proxmox. Enables optimal hardware resource utilization.",
+      "backup": "Data and system backup solution. Examples: Veeam, Commvault, Rubrik, Cohesity, Veritas NetBackup. Follow 3-2-1 backup: 3 copies, 2 media types, 1 offsite.",
+      "drSite": "Disaster Recovery Site - Location for disaster recovery. Can be secondary datacenter, cloud DR (Azure Site Recovery, AWS DRS), or colocation. RTO/RPO depends on business requirements."
+    }
   },
   "security": {
     "title": "Security & Compliance",
@@ -381,6 +447,19 @@
         "ad_hoc": "Ad-hoc",
         "none": "None"
       }
+    },
+    "tooltips": {
+      "framework": "Standard security framework adopted for managing cybersecurity risk. NIST: Popular US standard. ISO 27001: International standard. CIS Controls: 18 prioritized controls. Custom: Self-built framework from multiple sources.",
+      "reporting": "Reporting structure for security leadership (CISO). Reporting to CIO is most common. Reporting to CEO/President indicates high security priority. Reporting to CFO often relates to compliance focus.",
+      "compliance": "Mandatory or voluntary compliance standards. FERPA: Student data protection (US). GDPR: Personal data protection (EU). HIPAA: Healthcare data. PCI-DSS: Card payments. SOC 2: Service controls.",
+      "endpoint": "Endpoint protection solution for devices (laptops, desktops, mobile). Modern EDR/XDR like CrowdStrike, SentinelOne, Microsoft Defender. Traditional antivirus is insufficient for current threats.",
+      "siem": "Security Information & Event Management - Collects and analyzes security logs from multiple sources to detect threats. Examples: Splunk, Microsoft Sentinel, IBM QRadar. SIEM is the core of Security Operations Center (SOC).",
+      "iam": "Identity & Access Management - Manages identity and access rights. Includes SSO (Single Sign-On), MFA, Privileged Access Management. Examples: Okta, Azure AD, Duo, Ping Identity.",
+      "firewall": "Next-generation firewall (NGFW) protecting the network with application detection, IPS, and URL filtering. Examples: Palo Alto, Fortinet, Check Point, Cisco Firepower.",
+      "mfa": "Multi-Factor Authentication - Enhances security with multiple verification factors. Universal: All users. Staff only: Employees only. Selective: Critical systems. MFA significantly reduces credential theft risk.",
+      "training": "Security awareness training program for users. Includes phishing simulation, password hygiene, social engineering awareness. Regular training reduces risk from human error.",
+      "lastAudit": "Date of most recent security audit by third party or internal. Audits should be conducted annually. Includes penetration testing, vulnerability assessment, compliance audit.",
+      "incidents": "Number of major security incidents in the last 12 months. Includes: ransomware, data breach, successful phishing, unauthorized access. This number helps evaluate security program effectiveness."
     }
   },
   "financial": {
@@ -406,6 +485,18 @@
       "costPerStudent": "IT Cost per Student (USD)",
       "costPerEmployee": "IT Cost per Employee (USD)",
       "capexOpex": "Capital vs Operating Budget Ratio"
+    },
+    "tooltips": {
+      "totalBudget": "Total annual IT budget including all costs: personnel, hardware, software, cloud, services, projects. Does not include shadow IT in other departments. Benchmark: 3-6% of total organizational budget.",
+      "breakdown": "Budget allocation by category helps analyze cost structure. Can enter absolute values (USD) or percentages (%). Total categories should equal 100% or total budget.",
+      "personnel": "IT personnel costs including: salary, benefits, insurance, and contractor/consultant costs. Typically 30-50% of IT budget. EDUCAUSE benchmark: ~38%.",
+      "hardware": "Hardware costs including: servers, storage, networking equipment, and end-user devices (laptops, desktops, mobile). Trend declining as organizations move to cloud.",
+      "software": "Software license costs including: enterprise applications (ERP, SIS, LMS), productivity tools (Microsoft 365), and specialized software. Trend increasing with SaaS model.",
+      "cloud": "Cloud service costs including IaaS (compute, storage), PaaS (database, AI services), and SaaS (applications). Rapidly growing trend in education.",
+      "budgetPercent": "IT budget ratio compared to total organizational budget. Education benchmark: 3-6%. Higher Education: 4-7%. Low ratio may indicate insufficient IT investment.",
+      "costPerStudent": "Average IT cost per student. Formula: Total IT budget / Total students. EDUCAUSE benchmark: $500-$1,200/student depending on institution type.",
+      "costPerEmployee": "Average IT cost per employee. Formula: Total IT budget / Total employees. Benchmark: $3,000-$5,000/employee. Reflects investment in productivity.",
+      "capexOpex": "Ratio of Capital Expenditure (asset purchases) vs Operational Expenditure (operating costs). Trend shifting from CapEx to OpEx with cloud and SaaS. Benchmark: 30/70 to 20/80."
     }
   },
   "digitization": {
@@ -446,7 +537,26 @@
       "dataMaturity": "Data & Analytics Maturity (1-5)",
       "itOperations": "IT Operations Maturity (1-5)"
     },
-    "painPoints": "Key Pain Points & Quick Win Opportunities"
+    "painPoints": "Key Pain Points & Quick Win Opportunities",
+    "tooltips": {
+      "admissions": "Rate digitization level of admissions process: Application processing, CRM for prospect tracking, automated communications, application evaluation. 1=Fully manual, 5=Fully automated and integrated.",
+      "enrollment": "Rate enrollment and registration process: Online course registration, electronic payment processing, automated approvals. 1=Paper-based manual, 5=Complete self-service.",
+      "academic": "Rate academic operations: Grade management, electronic transcripts, automated scheduling, learning progress tracking. 1=Paper gradebooks, 5=Real-time analytics.",
+      "studentServices": "Rate student services: Online academic advising, financial aid support, career services, ticketing system. 1=Walk-in only, 5=Omnichannel support.",
+      "alumni": "Rate alumni relations: Alumni database, fundraising campaigns, event management, networking platform. 1=No system, 5=Integrated engagement platform.",
+      "curriculum": "Rate curriculum management: Program design, approval workflow, syllabus management, learning outcomes. 1=Word/Excel, 5=Curriculum management system.",
+      "quality": "Rate quality assurance: Accreditation processes, feedback collection, assessment tracking, compliance reporting. 1=Manual, 5=Continuous quality monitoring.",
+      "library": "Rate library services: Digital resources, lending system, online research, interlibrary loan. 1=Traditional library, 5=Digital library services.",
+      "research": "Rate research administration: Grant management, research data, publication tracking, collaboration tools. 1=No system, 5=Research information system.",
+      "finance": "Rate finance & accounting: Financial ERP, budget management, accounts payable/receivable, financial reporting. 1=Manual bookkeeping, 5=Real-time financial analytics.",
+      "hr": "Rate HR processes: Online recruiting, digital onboarding, payroll management, performance evaluation. 1=Paper files, 5=HCM cloud platform.",
+      "procurement": "Rate procurement: E-procurement, vendor management, PO automation, contract lifecycle. 1=Manual, 5=Procurement analytics.",
+      "facilities": "Rate facilities management: Space management, work order system, asset tracking, sustainability monitoring. 1=No system, 5=Smart building platform.",
+      "processDigitization": "Composite score rating business process digitization level. Calculate average of individual ratings. 1.0-2.0: Urgent improvement needed. 3.0-4.0: Developing. 4.0-5.0: Advanced.",
+      "dataMaturity": "Score rating data and analytics maturity level. Includes: data governance, data quality, analytics capability, data-driven decisions. 1=Ad-hoc, 5=Predictive/Prescriptive.",
+      "itOperations": "Score rating IT operations maturity level. Includes: service management, automation, monitoring, incident response. 1=Reactive, 5=AIOps & full automation.",
+      "painPoints": "Describe key pain points in current processes and quick win opportunities. Quick wins: Fast improvements, low cost, high impact. Helps prioritize transformation roadmap."
+    }
   }
 }
 

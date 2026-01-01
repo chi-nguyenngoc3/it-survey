@@ -207,7 +207,7 @@ export const surveyFormDataSchema = z.object({
   biTool: z.string().optional(),
   dataGovernance: z.string().optional(),
   dataLake: z.string().optional(),
-  masterData: z.record(z.string(), z.string()).optional(),
+  masterData: z.string().optional(),
   dataQualityScore: z.string().optional(),
 
   // AI & Emerging Technologies
@@ -216,6 +216,7 @@ export const surveyFormDataSchema = z.object({
   aiUseCases: z.array(z.string()).optional(),
   aiPlatforms: z.string().optional(),
   aiGovernance: z.string().optional(),
+  aiInitiatives: z.string().optional(),
 
   // Infrastructure & Cloud
   datacenterStrategy: z.string().optional(),

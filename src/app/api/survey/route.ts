@@ -1,37 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@/lib/supabase/server';
 import { createSurveySchema } from '@/lib/validations/survey';
-import { createInitialFormData } from '@/types/survey';
+import { createInitialFormData, SurveyFormData } from '@/types/survey';
+import {
+  appendSurveyResponse,
+  getAllSurveyResponses,
+  isGoogleSheetsConfigured,
+} from '@/lib/google-sheets/client';
 
 /**
  * GET /api/survey - List all surveys
  */
 export async function GET() {
   try {
-    const supabase = createServerClient();
-    
-    if (!supabase) {
-      // Return mock data if Supabase is not configured
+    if (!isGoogleSheetsConfigured()) {
+      // Return empty data if Google Sheets is not configured
       return NextResponse.json({
         success: true,
         data: [],
-        message: 'Supabase not configured. Using local storage mode.'
+        message: 'Google Sheets not configured. Using local storage mode.',
       });
     }
 
-    const { data, error } = await supabase
-      .from('survey_responses')
-      .select('*')
-      .order('updated_at', { ascending: false });
+    const result = await getAllSurveyResponses();
 
-    if (error) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: error.message },
+        { success: false, error: result.error },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, data: result.data });
   } catch (error) {
     console.error('Error fetching surveys:', error);
     return NextResponse.json(
@@ -50,60 +49,106 @@ export async function POST(request: NextRequest) {
     const validationResult = createSurveySchema.safeParse(body);
 
     if (!validationResult.success) {
+      // Format validation errors as a readable string with field names
+      const errorMessages = validationResult.error.issues.map(issue => {
+        const path = issue.path.join('.');
+        // Make field names more readable
+        const fieldName = path
+          .replace('formData.', '')
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/\./g, ' → ')
+          .trim();
+        return fieldName ? `[${fieldName}] ${issue.message}` : issue.message;
+      }).join('\n');
+      
       return NextResponse.json(
-        { success: false, error: validationResult.error.issues },
+        { 
+          success: false, 
+          error: `Validation errors:\n${errorMessages}`,
+          issues: validationResult.error.issues 
+        },
         { status: 400 }
       );
     }
 
     const { language, formData } = validationResult.data;
-    const supabase = createServerClient();
+    
+    // Create complete form data by merging with defaults
+    // The frontend always sends complete formData, but we ensure type safety here
+    const initialData = createInitialFormData();
+    const surveyFormData: SurveyFormData = {
+      ...initialData,
+      ...(formData as Partial<SurveyFormData>),
+      // Ensure nested objects are properly merged
+      itFteBreakdown: { ...initialData.itFteBreakdown, ...formData?.itFteBreakdown },
+      serviceDesk: { ...initialData.serviceDesk, ...formData?.serviceDesk },
+      changeManagement: { ...initialData.changeManagement, ...formData?.changeManagement },
+      incidentManagement: { ...initialData.incidentManagement, ...formData?.incidentManagement },
+      problemManagement: { ...initialData.problemManagement, ...formData?.problemManagement },
+      assetManagement: { ...initialData.assetManagement, ...formData?.assetManagement },
+      erp: { ...initialData.erp, ...formData?.erp },
+      lms: { ...initialData.lms, ...formData?.lms },
+      sis: { ...initialData.sis, ...formData?.sis },
+      crm: { ...initialData.crm, ...formData?.crm },
+      dataWarehouse: { ...initialData.dataWarehouse, ...formData?.dataWarehouse },
+      cloudAdoption: { ...initialData.cloudAdoption, ...formData?.cloudAdoption },
+      networkInfra: { ...initialData.networkInfra, ...formData?.networkInfra },
+      securityTools: { ...initialData.securityTools, ...formData?.securityTools },
+      budgetBreakdown: { ...initialData.budgetBreakdown, ...formData?.budgetBreakdown },
+      processMaturity: { ...initialData.processMaturity, ...formData?.processMaturity },
+    };
 
-    if (!supabase) {
-      // Return a mock ID if Supabase is not configured
+    if (!isGoogleSheetsConfigured()) {
+      // Return a mock ID if Google Sheets is not configured
       const mockId = `local-${Date.now()}`;
       return NextResponse.json({
         success: true,
         data: {
           id: mockId,
           language,
-          form_data: formData || createInitialFormData(),
-          current_section: 0,
-          completed_sections: [],
-          is_completed: false,
+          form_data: surveyFormData,
+          current_section: 10,
+          completed_sections: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          is_completed: true,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         },
-        message: 'Created in local storage mode'
+        message: 'Created in local storage mode',
       });
     }
 
-    const { data, error } = await supabase
-      .from('survey_responses')
-      .insert({
-        language,
-        form_data: formData || createInitialFormData(),
-        current_section: 0,
-        completed_sections: [],
-        is_completed: false
-      })
-      .select()
-      .single();
+    // Survey is completed when submitted via POST
+    const result = await appendSurveyResponse(surveyFormData, language, 10, true);
 
-    if (error) {
+    if (!result.success) {
       return NextResponse.json(
-        { success: false, error: error.message },
+        { success: false, error: result.error },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, data }, { status: 201 });
+    return NextResponse.json(
+      {
+        success: true,
+        data: {
+          id: result.rowId,
+          language,
+          form_data: surveyFormData,
+          current_section: 10,
+          completed_sections: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          is_completed: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error('Error creating survey:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json(
-      { success: false, error: 'Internal server error' },
+      { success: false, error: `Server error: ${errorMessage}` },
       { status: 500 }
     );
   }
 }
-

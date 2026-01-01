@@ -3,38 +3,75 @@
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Settings } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { exampleITProcesses } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
-export function ITProcesses({ formData, updateFormData, updateNestedData }: SectionProps) {
+export function ITProcesses({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleITProcesses).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleITProcesses).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, '');
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Settings className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('itProcesses.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Settings className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('itProcesses.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       {/* ITIL Maturity */}
       <div className="space-y-2">
-        <Label htmlFor="itilMaturity" className="required">
+        <LabelWithTooltip
+          htmlFor="itilMaturity"
+          tooltip={t('itProcesses.tooltips.itilMaturity')}
+          required
+        >
           {t('survey.fields.itilMaturity')}
-        </Label>
+        </LabelWithTooltip>
         <Select
           value={formData.itilMaturity}
           onValueChange={(value) => updateFormData('itilMaturity', value)}
         >
-          <SelectTrigger className="max-w-md">
+          <SelectTrigger className={cn('max-w-md', getFieldError?.('itilMaturity') && 'border-red-500')}>
             <SelectValue placeholder={t('common.select')} />
           </SelectTrigger>
           <SelectContent>
@@ -45,6 +82,7 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
             <SelectItem value="5">{t('survey.options.itilMaturity.5')}</SelectItem>
           </SelectContent>
         </Select>
+        <FormError message={getFieldError?.('itilMaturity')} />
       </div>
 
       {/* Service Desk */}
@@ -54,21 +92,30 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="serviceDeskTool" className="required">
+            <LabelWithTooltip
+              htmlFor="serviceDeskTool"
+              tooltip={t('itProcesses.tooltips.serviceDeskTool')}
+              required
+            >
               {t('itProcesses.serviceDesk.tool')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="serviceDeskTool"
               value={formData.serviceDesk.tool || ''}
               onChange={(e) => updateNestedData('serviceDesk', 'tool', e.target.value)}
               placeholder="e.g., ServiceNow, Jira, BMC"
+              className={cn(getFieldError?.('serviceDesk.tool') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('serviceDesk.tool')} />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="monthlyTickets">
+            <LabelWithTooltip
+              htmlFor="monthlyTickets"
+              tooltip={t('itProcesses.tooltips.monthlyTickets')}
+            >
               {t('itProcesses.serviceDesk.monthlyTickets')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="monthlyTickets"
               type="number"
@@ -79,9 +126,12 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="fcr">
+            <LabelWithTooltip
+              htmlFor="fcr"
+              tooltip={t('itProcesses.tooltips.fcr')}
+            >
               {t('itProcesses.serviceDesk.fcr')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="fcr"
               type="number"
@@ -92,9 +142,12 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="resolutionTime">
+            <LabelWithTooltip
+              htmlFor="resolutionTime"
+              tooltip={t('itProcesses.tooltips.resolutionTime')}
+            >
               {t('itProcesses.serviceDesk.resolutionTime')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="resolutionTime"
               type="number"
@@ -113,14 +166,18 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="cabFrequency" className="required">
+            <LabelWithTooltip
+              htmlFor="cabFrequency"
+              tooltip={t('itProcesses.tooltips.cabFrequency')}
+              required
+            >
               {t('itProcesses.changeManagement.cabFrequency')}
-            </Label>
+            </LabelWithTooltip>
             <Select
               value={formData.changeManagement.cabFrequency || ''}
               onValueChange={(value) => updateNestedData('changeManagement', 'cabFrequency', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={cn(getFieldError?.('changeManagement.cabFrequency') && 'border-red-500')}>
                 <SelectValue placeholder={t('common.select')} />
               </SelectTrigger>
               <SelectContent>
@@ -131,12 +188,16 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
                 <SelectItem value="none">No formal CAB</SelectItem>
               </SelectContent>
             </Select>
+            <FormError message={getFieldError?.('changeManagement.cabFrequency')} />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="changeSuccessRate">
+            <LabelWithTooltip
+              htmlFor="changeSuccessRate"
+              tooltip={t('itProcesses.tooltips.changeSuccessRate')}
+            >
               {t('itProcesses.changeManagement.successRate')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="changeSuccessRate"
               type="number"
@@ -155,9 +216,12 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="assetTool">
+            <LabelWithTooltip
+              htmlFor="assetTool"
+              tooltip={t('itProcesses.tooltips.assetTool')}
+            >
               {t('itProcesses.assetManagement.tool')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="assetTool"
               value={formData.assetManagement.tool || ''}
@@ -167,9 +231,12 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="cmdbAccuracy">
+            <LabelWithTooltip
+              htmlFor="cmdbAccuracy"
+              tooltip={t('itProcesses.tooltips.cmdbAccuracy')}
+            >
               {t('itProcesses.assetManagement.cmdbAccuracy')}
-            </Label>
+            </LabelWithTooltip>
             <Input
               id="cmdbAccuracy"
               type="number"
@@ -183,4 +250,3 @@ export function ITProcesses({ formData, updateFormData, updateNestedData }: Sect
     </div>
   );
 }
-

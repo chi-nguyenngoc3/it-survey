@@ -221,7 +221,7 @@ export interface SurveyFormData {
   biTool: string;
   dataGovernance: string;
   dataLake: string;
-  masterData: Record<string, string>;
+  masterData: string;
   dataQualityScore: string;
 
   // AI & Emerging Technologies
@@ -230,6 +230,7 @@ export interface SurveyFormData {
   aiUseCases: string[];
   aiPlatforms: string;
   aiGovernance: string;
+  aiInitiatives: string;
 
   // Infrastructure & Cloud
   datacenterStrategy: string;
@@ -413,13 +414,14 @@ export function createInitialFormData(): SurveyFormData {
     biTool: '',
     dataGovernance: '',
     dataLake: '',
-    masterData: {},
+    masterData: '',
     dataQualityScore: '',
     aiStrategy: '',
     aiSpending: '',
     aiUseCases: [],
     aiPlatforms: '',
     aiGovernance: '',
+    aiInitiatives: '',
     datacenterStrategy: '',
     datacenterLocation: '',
     cloudAdoption: {

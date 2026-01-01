@@ -5,25 +5,57 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Database } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { exampleApplications } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
-export function ApplicationsPortfolio({ formData, updateFormData, updateNestedData }: SectionProps) {
+export function ApplicationsPortfolio({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleApplications).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleApplications).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, '');
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Database className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('applications.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Database className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('applications.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="info-box mb-6">
@@ -44,7 +76,9 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
               value={formData.sis.vendor || ''}
               onChange={(e) => updateNestedData('sis', 'vendor', e.target.value)}
               placeholder="e.g., Ellucian Banner, Workday Student"
+              className={cn(getFieldError?.('sis.vendor') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('sis.vendor')} />
           </div>
           <div className="space-y-2">
             <Label className="required">{t('applications.sis.hosting')}</Label>
@@ -52,7 +86,7 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
               value={formData.sis.hosting || ''}
               onValueChange={(value) => updateNestedData('sis', 'hosting', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={cn(getFieldError?.('sis.hosting') && 'border-red-500')}>
                 <SelectValue placeholder={t('common.select')} />
               </SelectTrigger>
               <SelectContent>
@@ -62,6 +96,7 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
                 <SelectItem value="hybrid">{t('survey.options.hosting.hybrid')}</SelectItem>
               </SelectContent>
             </Select>
+            <FormError message={getFieldError?.('sis.hosting')} />
           </div>
           <div className="space-y-2">
             <Label>{t('applications.sis.integration')}</Label>
@@ -103,15 +138,17 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
               value={formData.lms.vendor || ''}
               onChange={(e) => updateNestedData('lms', 'vendor', e.target.value)}
               placeholder="e.g., Canvas, Blackboard, Moodle"
+              className={cn(getFieldError?.('lms.vendor') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('lms.vendor')} />
           </div>
           <div className="space-y-2">
-            <Label className="required">{t('applications.sis.hosting')}</Label>
+            <Label className="required">{t('applications.lms.hosting')}</Label>
             <Select
               value={formData.lms.hosting || ''}
               onValueChange={(value) => updateNestedData('lms', 'hosting', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={cn(getFieldError?.('lms.hosting') && 'border-red-500')}>
                 <SelectValue placeholder={t('common.select')} />
               </SelectTrigger>
               <SelectContent>
@@ -120,6 +157,7 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
                 <SelectItem value="hosted">{t('survey.options.hosting.hosted')}</SelectItem>
               </SelectContent>
             </Select>
+            <FormError message={getFieldError?.('lms.hosting')} />
           </div>
           <div className="space-y-2">
             <Label>{t('applications.lms.users')}</Label>
@@ -201,7 +239,9 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
               value={formData.erp.vendor || ''}
               onChange={(e) => updateNestedData('erp', 'vendor', e.target.value)}
               placeholder="e.g., Workday, Banner Finance"
+              className={cn(getFieldError?.('erp.vendor') && 'border-red-500 focus-visible:border-red-500')}
             />
+            <FormError message={getFieldError?.('erp.vendor')} />
           </div>
           <div className="space-y-2">
             <Label>{t('applications.erp.version')}</Label>
@@ -211,12 +251,12 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
             />
           </div>
           <div className="space-y-2">
-            <Label className="required">{t('applications.sis.hosting')}</Label>
+            <Label className="required">{t('applications.erp.hosting')}</Label>
             <Select
               value={formData.erp.hosting || ''}
               onValueChange={(value) => updateNestedData('erp', 'hosting', value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className={cn(getFieldError?.('erp.hosting') && 'border-red-500')}>
                 <SelectValue placeholder={t('common.select')} />
               </SelectTrigger>
               <SelectContent>
@@ -226,6 +266,7 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
                 <SelectItem value="hybrid">{t('survey.options.hosting.hybrid')}</SelectItem>
               </SelectContent>
             </Select>
+            <FormError message={getFieldError?.('erp.hosting')} />
           </div>
           <div className="space-y-2">
             <Label>{t('applications.erp.implementationYear')}</Label>
@@ -282,14 +323,15 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
 
       {/* Total Applications */}
       <div className="space-y-2">
-        <Label>{t('applications.totalApplications')}</Label>
+        <Label className="required">{t('applications.totalApplications')}</Label>
         <Input
           type="number"
           value={formData.totalApplications}
           onChange={(e) => updateFormData('totalApplications', e.target.value)}
           placeholder="50"
-          className="max-w-xs"
+          className={cn('max-w-xs', getFieldError?.('totalApplications') && 'border-red-500 focus-visible:border-red-500')}
         />
+        <FormError message={getFieldError?.('totalApplications')} />
       </div>
 
       {/* Integration Challenges */}
@@ -305,4 +347,3 @@ export function ApplicationsPortfolio({ formData, updateFormData, updateNestedDa
     </div>
   );
 }
-

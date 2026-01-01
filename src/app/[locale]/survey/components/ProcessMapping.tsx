@@ -3,11 +3,14 @@
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Workflow } from 'lucide-react';
+import { exampleProcessMapping } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
@@ -54,13 +57,62 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
     }
   };
 
+  // Get mapping for a specific process
+  const getProcessMapping = (processKey: string) => {
+    const mappings = formData.processSystemMappings || [];
+    return mappings.find(m => m.process === processKey) || {
+      process: processKey,
+      primarySystem: '',
+      supportingSystems: '',
+      dataFlow: ''
+    };
+  };
+
+  // Update a specific process mapping field
+  const updateProcessMapping = (processKey: string, field: string, value: string) => {
+    const mappings = [...(formData.processSystemMappings || [])];
+    const existingIndex = mappings.findIndex(m => m.process === processKey);
+    
+    if (existingIndex >= 0) {
+      mappings[existingIndex] = { ...mappings[existingIndex], [field]: value };
+    } else {
+      mappings.push({
+        process: processKey,
+        primarySystem: field === 'primarySystem' ? value : '',
+        supportingSystems: field === 'supportingSystems' ? value : '',
+        dataFlow: field === 'dataFlow' ? value : ''
+      });
+    }
+    
+    updateFormData('processSystemMappings', mappings);
+  };
+
+  const handleGenerateExample = () => {
+    Object.entries(exampleProcessMapping).forEach(([key, value]) => {
+      updateFormData(key as keyof SurveyFormData, value);
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleProcessMapping).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        updateFormData(key as keyof SurveyFormData, []);
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Workflow className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('processMapping.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Workflow className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('processMapping.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="info-box mb-6">
@@ -75,46 +127,81 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
           <thead>
             <tr>
               <th>{t('processMapping.businessProcess')}</th>
-              <th>{t('processMapping.primarySystem')}</th>
-              <th>{t('processMapping.supportingSystems')}</th>
-              <th>{t('processMapping.dataFlow')}</th>
+              <th>
+                <div className="flex items-center gap-1">
+                  {t('processMapping.primarySystem')}
+                  <span className="text-gray-400 text-xs" title={t('processMapping.tooltips.primarySystem')}>ⓘ</span>
+                </div>
+              </th>
+              <th>
+                <div className="flex items-center gap-1">
+                  {t('processMapping.supportingSystems')}
+                  <span className="text-gray-400 text-xs" title={t('processMapping.tooltips.supportingSystems')}>ⓘ</span>
+                </div>
+              </th>
+              <th>
+                <div className="flex items-center gap-1">
+                  {t('processMapping.dataFlow')}
+                  <span className="text-gray-400 text-xs" title={t('processMapping.tooltips.dataFlow')}>ⓘ</span>
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody>
-            {businessProcesses.map((process) => (
-              <tr key={process}>
-                <td className="font-medium">
-                  {t(`processMapping.processes.${process}`)}
-                </td>
-                <td>
-                  <Select>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder={t('common.select')} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {systemOptions.map((system) => (
-                        <SelectItem key={system} value={system}>{system}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </td>
-                <td>
-                  <Input placeholder="e.g., API, BI, Portal" className="text-sm" />
-                </td>
-                <td>
-                  <Input placeholder="e.g., Web → CRM → BI" className="text-sm" />
-                </td>
-              </tr>
-            ))}
+            {businessProcesses.map((process) => {
+              const mapping = getProcessMapping(process);
+              const primarySystemValue = mapping.primarySystem || undefined;
+              return (
+                <tr key={`${process}-${primarySystemValue || 'empty'}`}>
+                  <td className="font-medium">
+                    {t(`processMapping.processes.${process}`)}
+                  </td>
+                  <td>
+                    <Select
+                      value={primarySystemValue}
+                      onValueChange={(value) => updateProcessMapping(process, 'primarySystem', value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder={t('common.select')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {systemOptions.map((system) => (
+                          <SelectItem key={system} value={system}>{system}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </td>
+                  <td>
+                    <Input 
+                      value={mapping.supportingSystems || ''}
+                      onChange={(e) => updateProcessMapping(process, 'supportingSystems', e.target.value)}
+                      placeholder="e.g., API, BI, Portal" 
+                      className="text-sm" 
+                    />
+                  </td>
+                  <td>
+                    <Input 
+                      value={mapping.dataFlow || ''}
+                      onChange={(e) => updateProcessMapping(process, 'dataFlow', e.target.value)}
+                      placeholder="e.g., Web → CRM → BI" 
+                      className="text-sm" 
+                    />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
       {/* Integration Pain Points */}
       <div className="border-t pt-6">
-        <h3 className="font-semibold text-gray-800 mb-4">
-          Integration Pain Points & Challenges
-        </h3>
+        <LabelWithTooltip
+          tooltip={t('processMapping.tooltips.integrationChallenges')}
+          className="mb-3"
+        >
+          <span className="font-semibold text-gray-800">Integration Pain Points & Challenges</span>
+        </LabelWithTooltip>
         <Textarea
           value={formData.integrationChallenges}
           onChange={(e) => updateFormData('integrationChallenges', e.target.value)}
@@ -125,9 +212,12 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
 
       {/* Integration Gaps */}
       <div className="border-t pt-6">
-        <h3 className="font-semibold text-gray-800 mb-4">
-          {t('processMapping.integrationGaps.title')}
-        </h3>
+        <LabelWithTooltip
+          tooltip={t('processMapping.tooltips.integrationGaps')}
+          className="mb-4"
+        >
+          <span className="font-semibold text-gray-800">{t('processMapping.integrationGaps.title')}</span>
+        </LabelWithTooltip>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {integrationGapKeys.map((gapKey) => (
             <div key={gapKey} className="flex items-center space-x-2">
@@ -154,7 +244,11 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>{t('processMapping.maturityLevel.level')}</Label>
+            <LabelWithTooltip
+              tooltip={t('processMapping.tooltips.maturityLevel')}
+            >
+              {t('processMapping.maturityLevel.level')}
+            </LabelWithTooltip>
             <Select
               value={formData.integrationMaturityLevel}
               onValueChange={(value) => updateFormData('integrationMaturityLevel', value)}
@@ -173,7 +267,11 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
           </div>
 
           <div className="space-y-2">
-            <Label>{t('processMapping.maturityLevel.activeIntegrations')}</Label>
+            <LabelWithTooltip
+              tooltip={t('processMapping.tooltips.activeIntegrations')}
+            >
+              {t('processMapping.maturityLevel.activeIntegrations')}
+            </LabelWithTooltip>
             <Input
               type="number"
               value={formData.activeIntegrations}
@@ -186,4 +284,3 @@ export function ProcessMapping({ formData, updateFormData }: SectionProps) {
     </div>
   );
 }
-

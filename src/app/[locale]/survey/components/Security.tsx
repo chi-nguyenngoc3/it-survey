@@ -3,20 +3,26 @@
 import { useTranslations } from 'next-intl';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LabelWithTooltip } from '@/components/ui/label-with-tooltip';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { FormError } from '@/components/ui/form-error';
+import { GenerateExampleButton } from '@/components/ui/generate-example-button';
 import { SurveyFormData } from '@/types/survey';
 import { Shield } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { exampleSecurity } from '@/lib/exampleData';
 
 interface SectionProps {
   formData: SurveyFormData;
   updateFormData: (field: keyof SurveyFormData, value: unknown) => void;
   updateNestedData: (parent: keyof SurveyFormData, field: string, value: unknown) => void;
+  getFieldError?: (fieldName: string) => string | undefined;
 }
 
 const complianceOptions = ['FERPA', 'HIPAA', 'PCI DSS', 'GDPR', 'CCPA', 'SOC 2', 'FISMA', 'ITAR'];
 
-export function Security({ formData, updateFormData, updateNestedData }: SectionProps) {
+export function Security({ formData, updateFormData, updateNestedData, getFieldError }: SectionProps) {
   const t = useTranslations();
 
   const handleComplianceChange = (standard: string, checked: boolean) => {
@@ -28,24 +34,58 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
     }
   };
 
+  const handleGenerateExample = () => {
+    Object.entries(exampleSecurity).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.entries(value).forEach(([nestedKey, nestedValue]) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, nestedValue);
+        });
+      } else {
+        updateFormData(key as keyof SurveyFormData, value);
+      }
+    });
+  };
+
+  const handleClearExample = () => {
+    Object.entries(exampleSecurity).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+        Object.keys(value).forEach((nestedKey) => {
+          updateNestedData(key as keyof SurveyFormData, nestedKey, '');
+        });
+      } else if (Array.isArray(value)) {
+        updateFormData(key as keyof SurveyFormData, []);
+      } else {
+        updateFormData(key as keyof SurveyFormData, '');
+      }
+    });
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3 border-b border-primary pb-3 mb-6">
-        <Shield className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-semibold text-primary">
-          {t('security.title')}
-        </h2>
+      <div className="flex items-center justify-between border-b border-primary pb-3 mb-6">
+        <div className="flex items-center gap-3">
+          <Shield className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-semibold text-primary">
+            {t('security.title')}
+          </h2>
+        </div>
+        <GenerateExampleButton onClick={handleGenerateExample} onClear={handleClearExample} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Security Framework */}
         <div className="space-y-2">
-          <Label className="required">{t('security.framework')}</Label>
+          <LabelWithTooltip 
+            className="required"
+            tooltip={t('security.tooltips.framework')}
+          >
+            {t('security.framework')}
+          </LabelWithTooltip>
           <Select
             value={formData.securityFramework}
             onValueChange={(value) => updateFormData('securityFramework', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className={cn(getFieldError?.('securityFramework') && 'border-red-500')}>
               <SelectValue placeholder={t('common.select')} />
             </SelectTrigger>
             <SelectContent>
@@ -56,11 +96,14 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
               <SelectItem value="none">No Formal Framework</SelectItem>
             </SelectContent>
           </Select>
+          <FormError message={getFieldError?.('securityFramework')} />
         </div>
 
         {/* Security Reporting */}
         <div className="space-y-2">
-          <Label>{t('security.reporting')}</Label>
+          <LabelWithTooltip tooltip={t('security.tooltips.reporting')}>
+            {t('security.reporting')}
+          </LabelWithTooltip>
           <Select
             value={formData.securityReporting}
             onValueChange={(value) => updateFormData('securityReporting', value)}
@@ -81,7 +124,9 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
 
       {/* Compliance Standards */}
       <div className="space-y-3">
-        <Label>{t('security.compliance')}</Label>
+        <LabelWithTooltip tooltip={t('security.tooltips.compliance')}>
+          {t('security.compliance')}
+        </LabelWithTooltip>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {complianceOptions.map((standard) => (
             <div key={standard} className="flex items-center space-x-2">
@@ -105,33 +150,55 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
       <div className="space-y-4">
         <Label>{t('security.tools.title')}</Label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input
-            value={formData.securityTools.endpoint || ''}
-            onChange={(e) => updateNestedData('securityTools', 'endpoint', e.target.value)}
-            placeholder={`${t('security.tools.endpoint')} (e.g., CrowdStrike, Microsoft Defender)`}
-          />
-          <Input
-            value={formData.securityTools.siem || ''}
-            onChange={(e) => updateNestedData('securityTools', 'siem', e.target.value)}
-            placeholder={`${t('security.tools.siem')} (e.g., Splunk, QRadar)`}
-          />
-          <Input
-            value={formData.securityTools.iam || ''}
-            onChange={(e) => updateNestedData('securityTools', 'iam', e.target.value)}
-            placeholder={`${t('security.tools.iam')} (e.g., Okta, Duo)`}
-          />
-          <Input
-            value={formData.securityTools.firewall || ''}
-            onChange={(e) => updateNestedData('securityTools', 'firewall', e.target.value)}
-            placeholder={`${t('security.tools.firewall')} (e.g., Palo Alto, Fortinet)`}
-          />
+          <div className="space-y-2">
+            <LabelWithTooltip tooltip={t('security.tooltips.endpoint')}>
+              {t('security.tools.endpoint')}
+            </LabelWithTooltip>
+            <Input
+              value={formData.securityTools.endpoint || ''}
+              onChange={(e) => updateNestedData('securityTools', 'endpoint', e.target.value)}
+              placeholder="e.g., CrowdStrike, Microsoft Defender"
+            />
+          </div>
+          <div className="space-y-2">
+            <LabelWithTooltip tooltip={t('security.tooltips.siem')}>
+              {t('security.tools.siem')}
+            </LabelWithTooltip>
+            <Input
+              value={formData.securityTools.siem || ''}
+              onChange={(e) => updateNestedData('securityTools', 'siem', e.target.value)}
+              placeholder="e.g., Splunk, QRadar"
+            />
+          </div>
+          <div className="space-y-2">
+            <LabelWithTooltip tooltip={t('security.tooltips.iam')}>
+              {t('security.tools.iam')}
+            </LabelWithTooltip>
+            <Input
+              value={formData.securityTools.iam || ''}
+              onChange={(e) => updateNestedData('securityTools', 'iam', e.target.value)}
+              placeholder="e.g., Okta, Duo"
+            />
+          </div>
+          <div className="space-y-2">
+            <LabelWithTooltip tooltip={t('security.tooltips.firewall')}>
+              {t('security.tools.firewall')}
+            </LabelWithTooltip>
+            <Input
+              value={formData.securityTools.firewall || ''}
+              onChange={(e) => updateNestedData('securityTools', 'firewall', e.target.value)}
+              placeholder="e.g., Palo Alto, Fortinet"
+            />
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* MFA Implementation */}
         <div className="space-y-2">
-          <Label>{t('security.mfa')}</Label>
+          <LabelWithTooltip tooltip={t('security.tooltips.mfa')}>
+            {t('security.mfa')}
+          </LabelWithTooltip>
           <Select
             value={formData.mfaImplementation}
             onValueChange={(value) => updateFormData('mfaImplementation', value)}
@@ -151,7 +218,9 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
 
         {/* Security Training */}
         <div className="space-y-2">
-          <Label>{t('security.training')}</Label>
+          <LabelWithTooltip tooltip={t('security.tooltips.training')}>
+            {t('security.training')}
+          </LabelWithTooltip>
           <Select
             value={formData.securityTraining}
             onValueChange={(value) => updateFormData('securityTraining', value)}
@@ -170,7 +239,9 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
 
         {/* Last Security Audit */}
         <div className="space-y-2">
-          <Label>Last Security Audit Date</Label>
+          <LabelWithTooltip tooltip={t('security.tooltips.lastAudit')}>
+            Last Security Audit Date
+          </LabelWithTooltip>
           <Input
             value={formData.lastSecurityAudit}
             onChange={(e) => updateFormData('lastSecurityAudit', e.target.value)}
@@ -180,7 +251,9 @@ export function Security({ formData, updateFormData, updateNestedData }: Section
 
         {/* Security Incidents */}
         <div className="space-y-2">
-          <Label>Major Security Incidents (Last 12 months)</Label>
+          <LabelWithTooltip tooltip={t('security.tooltips.incidents')}>
+            Major Security Incidents (Last 12 months)
+          </LabelWithTooltip>
           <Input
             type="number"
             value={formData.securityIncidents}
