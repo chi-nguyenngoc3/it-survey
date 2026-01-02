@@ -1,9 +1,17 @@
 import { google } from 'googleapis';
 import { SurveyFormData } from '@/types/survey';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Sheet configuration
 const SHEET_NAME = 'Sheet1';
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
+
+// Paths for Google credentials file (Render Secret Files)
+const CREDENTIALS_PATHS = [
+  '/etc/secrets/google-credentials.json',  // Render Secret Files location
+  path.join(process.cwd(), 'google-credentials.json'),  // App root
+];
 
 // Complete column headers for the spreadsheet - matching all survey fields
 export const SHEET_HEADERS = [
@@ -180,6 +188,32 @@ export const SHEET_HEADERS = [
 ];
 
 /**
+ * Load credentials from JSON file (for Render Secret Files)
+ */
+function loadCredentialsFromFile(): { client_email: string; private_key: string } | null {
+  for (const credPath of CREDENTIALS_PATHS) {
+    try {
+      if (fs.existsSync(credPath)) {
+        console.log(`Loading Google credentials from: ${credPath}`);
+        const content = fs.readFileSync(credPath, 'utf-8');
+        const credentials = JSON.parse(content);
+        
+        if (credentials.client_email && credentials.private_key) {
+          console.log('Successfully loaded credentials from file');
+          return {
+            client_email: credentials.client_email,
+            private_key: credentials.private_key,
+          };
+        }
+      }
+    } catch (error) {
+      console.log(`Could not load credentials from ${credPath}:`, error);
+    }
+  }
+  return null;
+}
+
+/**
  * Parse private key to handle multiple formats from environment variables
  * Handles: escaped \n, literal \n, double-escaped \\n, and quoted strings
  */
@@ -211,8 +245,24 @@ function parsePrivateKey(key: string | undefined): string | null {
 
 /**
  * Create Google Auth client
+ * Priority: 1) JSON credentials file, 2) Environment variables
  */
 function createAuth() {
+  // Try loading from file first (Render Secret Files)
+  const fileCredentials = loadCredentialsFromFile();
+  
+  if (fileCredentials) {
+    return new google.auth.GoogleAuth({
+      credentials: {
+        client_email: fileCredentials.client_email,
+        private_key: fileCredentials.private_key,
+      },
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+  }
+  
+  // Fall back to environment variables
+  console.log('No credentials file found, trying environment variables...');
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const privateKey = parsePrivateKey(process.env.GOOGLE_PRIVATE_KEY);
 
