@@ -37,52 +37,13 @@ export default function SurveyPage() {
   const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   
-  // Check for reset param IMMEDIATELY and clear localStorage BEFORE hook initializes
+  // Check for reset/start params
   const shouldReset = searchParams.get('reset') === '1';
   const shouldStart = searchParams.get('start') === '1';
   
-  // Clear localStorage synchronously if reset param is present
-  if (typeof window !== 'undefined' && shouldReset) {
-    console.log('[SurveyPage] Reset param detected - clearing localStorage immediately');
-    localStorage.removeItem('itsm-survey-data');
-  }
-  
-  // Set currentSection to 0 if start param is present (without clearing data)
-  if (typeof window !== 'undefined' && shouldStart) {
-    console.log('[SurveyPage] Start param detected - setting section to 0');
-    const savedData = localStorage.getItem('itsm-survey-data');
-    if (savedData) {
-      try {
-        const parsed = JSON.parse(savedData);
-        parsed.currentSection = 0;
-        localStorage.setItem('itsm-survey-data', JSON.stringify(parsed));
-      } catch {
-        // Ignore parse errors
-      }
-    }
-  }
-
-  // Handle redirect after reset or start (in useEffect to avoid hydration issues)
-  useEffect(() => {
-    if (shouldReset || shouldStart) {
-      console.log('[SurveyPage] Redirecting to clean URL');
-      window.location.replace(`/${locale}/survey`);
-    }
-  }, [shouldReset, shouldStart, locale]);
-
-  // Show loading while resetting/starting
-  if (shouldReset || shouldStart) {
-    return (
-      <div className="min-h-screen bg-background-gray flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-gray-600">{locale === 'vi' ? 'Đang khởi tạo...' : 'Initializing...'}</p>
-        </div>
-      </div>
-    );
-  }
-  
+  // ALL HOOKS MUST BE CALLED BEFORE ANY RETURN STATEMENTS
   const {
     formData,
     currentSection,
@@ -96,8 +57,36 @@ export default function SurveyPage() {
     markSectionComplete,
     clearValidationErrors,
     getFieldError,
-    exportData
+    exportData,
+    resetForm
   } = useSurveyForm({ locale });
+
+  // Handle reset/start params in useEffect
+  useEffect(() => {
+    if (shouldReset) {
+      console.log('[SurveyPage] Reset param detected - clearing data and redirecting');
+      localStorage.removeItem('itsm-survey-data');
+      setIsRedirecting(true);
+      window.location.replace(`/${locale}/survey`);
+    } else if (shouldStart) {
+      console.log('[SurveyPage] Start param detected - setting section to 0');
+      setCurrentSection(0);
+      setIsRedirecting(true);
+      window.location.replace(`/${locale}/survey`);
+    }
+  }, [shouldReset, shouldStart, locale, setCurrentSection]);
+
+  // Show loading while redirecting
+  if (isRedirecting || shouldReset || shouldStart) {
+    return (
+      <div className="min-h-screen bg-background-gray flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-600">{t('common.loading')}</p>
+        </div>
+      </div>
+    );
+  }
 
   const progress = Math.round((completedSections.size / SURVEY_SECTIONS.length) * 100);
   const isLastSection = currentSection === SURVEY_SECTIONS.length - 1;

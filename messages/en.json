@@ -25,7 +25,12 @@
   "header": {
     "title": "ITSM Data Collection",
     "subtitle": "IT Service Management Assessment for Education",
-    "language": "Language"
+    "language": "Language",
+    "nav": {
+      "survey": "Survey",
+      "about": "About",
+      "faq": "FAQ"
+    }
   },
   "footer": {
     "copyright": "© 2024 ITSM Survey. All rights reserved.",
@@ -645,6 +650,34 @@
       "a3": {
         "question": "How important is the Student Information System (SIS)?",
         "answer": "SIS is the most critical system in the EduTech stack:\n\n**Role of SIS:**\n• System of Record for student data\n• Hub for all student lifecycle processes\n• Critical integration point\n\n**Core Functions:**\n• Student demographics and admissions\n• Course registration and scheduling\n• Grading and transcripts\n• Academic records and degree audit\n• Billing and financial aid interface\n\n**Popular SIS Options:**\n• Ellucian Banner/Colleague (Higher Ed)\n• PowerSchool (K-12)\n• Infinite Campus (K-12)\n• Custom/Local SIMS\n\n**Integration Priority:**\n• LMS (course roster, grades)\n• ERP (billing)\n• CRM (admissions)\n• Identity (SSO)"
+      },
+      "a4": {
+        "question": "How to effectively integrate SIS with LMS?",
+        "answer": "SIS-LMS integration strategy for education:\n\n**Data to Synchronize:**\n• Student information (ID, name, email)\n• Course and class listings\n• Course enrollments\n• Grades (grade passback)\n• User roles (instructor, student)\n\n**Integration Methods:**\n\n**1. LTI (Learning Tools Interoperability):**\n• Education industry standard\n• Supports SSO and grade passback\n• Canvas, Moodle, Blackboard all support it\n\n**2. Direct API:**\n• Flexible but more complex\n• Requires development effort\n• Real-time or batch\n\n**3. SIS Integration Tools:**\n• Clever (K-12)\n• OneRoster (standard)\n• Vendor-specific connectors\n\n**Common Challenges:**\n• Inconsistent student identifiers\n• Sync timing (enrollment delays)\n• Different course structures\n• Grade mapping (different scales)\n\n**Recommendations:**\n• Use LTI 1.3 for new integrations\n• Define Student ID as primary key\n• Automatic nightly batch sync\n• Real-time for critical enrollment"
+      },
+      "a5": {
+        "question": "Should we buy off-the-shelf software or build custom for core systems?",
+        "answer": "Build vs Buy analysis for education systems:\n\n**When to BUY:**\n• Common systems with good market solutions\n• No strong development team in-house\n• Need for quick deployment\n• Compliance with standard regulations\n• Examples: ERP, LMS, Email\n\n**When to BUILD:**\n• Unique, differentiated business processes\n• Strong internal development team\n• Deep integration with multiple systems required\n• IP ownership as competitive advantage\n• Examples: Student Portal, Super App\n\n**Analysis by System:**\n\n| System | Recommendation | Reason |\n|--------|----------------|--------|\n| SIS | Buy (PSC, Edusoft) | Regulatory compliance, complexity |\n| LMS | Buy (Moodle, Canvas) | Mature, large community |\n| ERP | Buy (MISA, SAP) | Accounting standards |\n| Portal/App | Build or Customize | Unique experience |\n| CRM | Buy (Salesforce, Zoho) | Built-in best practices |\n\n**Hybrid Model:**\n• Buy core systems\n• Build Portal/App layer in-house\n• Integrate via API/Middleware"
+      },
+      "a6": {
+        "question": "How is CRM in education different from regular enterprise CRM?",
+        "answer": "Education-specific CRM characteristics:\n\n**Education Customer Lifecycle:**\n\nProspect → Applicant → Admitted → Enrolled → Alumni → Donor\n\n**Specialized Functions:**\n\n**1. Admissions:**\n• Lead scoring for prospective students\n• Enrollment funnel tracking\n• Yield management (enrollment prediction)\n• Event management (Open Days, webinars)\n\n**2. Scholarship Management:**\n• Approval workflows\n• Budget optimization\n• ROI by recruitment source\n\n**3. Alumni Relations:**\n• Career path tracking\n• Engagement campaigns\n• Fundraising management\n\n**4. Corporate Relations:**\n• Internship partners\n• Employers\n• Sponsors\n\n**Education CRM Solutions:**\n• **Salesforce Education Cloud** - Most comprehensive, expensive\n• **Microsoft Dynamics 365** - Good Office integration\n• **HubSpot** - Free tier, strong marketing\n• **Slate** - Admissions-focused\n• **Zoho CRM** - Affordable, sufficient features"
+      },
+      "a7": {
+        "question": "What are the challenges of implementing ERP in educational institutions?",
+        "answer": "ERP implementation challenges in education:\n\n**Education-Specific Challenges:**\n\n**1. Complex Organizational Structure:**\n• Autonomous departments/faculties\n• Distributed governance\n• Multi-level approval processes\n\n**2. Change Resistance Culture:**\n• Faculty unfamiliar with technology\n• \"We've always done it this way\"\n• Lack of incentives to change\n\n**3. Budget and Timeline:**\n• Limited budget\n• Cannot implement during academic terms\n• Extended implementation timeline\n\n**4. SIS Integration:**\n• Student data is master\n• Tuition and receivables sync\n• Chart of accounts mapping\n\n**Lessons Learned:**\n\n**Do:**\n• Phased implementation (Finance → HR → Procurement)\n• Pilot with 1-2 units first\n• Parallel change management\n• Strong executive sponsorship\n\n**Don't:**\n• Big bang implementation\n• Over-customize\n• Skip data migration\n• Implement during peak season\n\n**Realistic Timeline:**\n• Medium university: 12-18 months\n• Education group: 24-36 months"
+      },
+      "a8": {
+        "question": "How to safely migrate from old SIS to new SIS?",
+        "answer": "SIS migration strategy for educational institutions:\n\n**Preparation Phase (3-6 months):**\n\n**1. Current Data Assessment:**\n• Data quality audit\n• Identify data to migrate\n• Clean source data\n\n**2. Data Mapping:**\n• Old → new field mapping\n• Transformation rules\n• Handle non-standard data\n\n**Data to Migrate:**\n\n**Required:**\n• Current student records\n• Grade history (transcripts)\n• Tuition receivables\n• Academic programs\n\n**Optional:**\n• Graduated student data (>5 years)\n• Logs, audit trails\n• Old attachments\n\n**Migration Strategies:**\n\n**Option 1: Parallel Run (Recommended)**\n• Run both systems for 1 semester\n• Compare results\n• Easy rollback\n\n**Option 2: Cutover Weekend**\n• Switch during summer break\n• Higher risk\n• Faster\n\n**Go-Live Checklist:**\n• Data validation reports\n• User acceptance testing\n• Old system backup\n• Support team ready\n• Communication plan"
+      },
+      "a9": {
+        "question": "How to migrate course content from old LMS to new LMS?",
+        "answer": "LMS content migration strategy:\n\n**Current Content Assessment:**\n\n**1. Content Inventory:**\n• Number of courses\n• Content types (video, SCORM, quiz...)\n• Which courses are active\n• Storage size\n\n**2. Priority Classification:**\n• **Migrate**: Quality content, in use\n• **Rebuild**: Content needs updating\n• **Archive**: Old, rarely used\n• **Delete**: Obsolete content\n\n**Migration Methods:**\n\n**1. Common Cartridge/LTI:**\n• Standard LMS export/import\n• Supported by: Canvas, Moodle, Blackboard\n• Preserves course structure\n\n**2. SCORM Packages:**\n• For eLearning content\n• Portable between LMS\n• Requires compatibility testing\n\n**3. Manual Rebuild:**\n• For complex content\n• Opportunity to improve quality\n• Most time-consuming\n\n**Important Notes:**\n• Old grade data: Export separately, don't migrate\n• Videos: Host on Kaltura/YouTube separately\n• Quiz banks: Usually need rebuild\n• Discussions/Forums: Usually don't migrate\n\n**Realistic Timeline:**\n• 100 courses: 2-3 months\n• 500+ courses: 6-12 months"
+      },
+      "a10": {
+        "question": "Should we build a unified Super App / Portal for students?",
+        "answer": "Super App / Portal strategy for education:\n\n**Current Problems:**\n• Students must log into multiple systems\n• Different accounts for each system\n• Fragmented experience, hard to use\n• Information not synchronized\n\n**Portal Integration Levels:**\n\n**Level 1 - Link Portal:**\n• Portal only contains links\n• Still separate logins per system\n• Easy to implement, low value\n\n**Level 2 - SSO Portal:**\n• Single Sign-On\n• 1 account, multiple systems\n• Better experience\n\n**Level 3 - Integrated Portal:**\n• Synchronized data\n• Unified dashboard\n• Centralized notifications\n\n**Level 4 - Super App:**\n• Mobile-first\n• All services integrated\n• AI personalization\n• Examples: MyBK (HCMUT), FAP (FPT)\n\n**Super App Features:**\n• View grades, class schedule\n• Course registration\n• Tuition payment\n• Announcements, news\n• Support chatbot\n• Campus map, room booking\n• Digital student ID\n\n**Build vs Buy:**\n• Core systems: BUY (SIS, LMS, ERP)\n• Super App layer: BUILD IN-HOUSE\n• Reason: Experience is a differentiator\n\n**Cost Estimates:**\n• MVP: $20K - $40K\n• Full-featured: $80K - $200K\n• Annual maintenance: 20-30% of initial cost"
       },
       "m1": {
         "question": "Should API or ETL be used for system integration?",

@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { FormattedText } from '@/components/ui/formatted-text';
 import { Input } from '@/components/ui/input';
 import {
   Select,
@@ -63,7 +64,7 @@ interface FAQItem {
   keywords: string[];
 }
 
-// 30 FAQs organized by section
+// 38 FAQs organized by section
 const faqData: FAQItem[] = [
   // General Questions (5)
   {
@@ -160,7 +161,7 @@ const faqData: FAQItem[] = [
     answerKey: 'faq.questions.p3.answer',
     keywords: ['change', 'CAB', 'approval', 'thay đổi', 'phê duyệt'],
   },
-  // Applications (3)
+  // Applications (10)
   {
     id: 'a1',
     section: 'applications',
@@ -181,6 +182,55 @@ const faqData: FAQItem[] = [
     questionKey: 'faq.questions.a3.question',
     answerKey: 'faq.questions.a3.answer',
     keywords: ['SIS', 'student information', 'enrollment', 'quản lý sinh viên'],
+  },
+  {
+    id: 'a4',
+    section: 'applications',
+    questionKey: 'faq.questions.a4.question',
+    answerKey: 'faq.questions.a4.answer',
+    keywords: ['SIS', 'LMS', 'integration', 'LTI', 'tích hợp'],
+  },
+  {
+    id: 'a5',
+    section: 'applications',
+    questionKey: 'faq.questions.a5.question',
+    answerKey: 'faq.questions.a5.answer',
+    keywords: ['build', 'buy', 'custom', 'mua', 'tự phát triển'],
+  },
+  {
+    id: 'a6',
+    section: 'applications',
+    questionKey: 'faq.questions.a6.question',
+    answerKey: 'faq.questions.a6.answer',
+    keywords: ['CRM', 'admissions', 'alumni', 'tuyển sinh', 'cựu sinh viên', 'Salesforce'],
+  },
+  {
+    id: 'a7',
+    section: 'applications',
+    questionKey: 'faq.questions.a7.question',
+    answerKey: 'faq.questions.a7.answer',
+    keywords: ['ERP', 'implementation', 'SAP', 'Oracle', 'triển khai', 'MISA'],
+  },
+  {
+    id: 'a8',
+    section: 'applications',
+    questionKey: 'faq.questions.a8.question',
+    answerKey: 'faq.questions.a8.answer',
+    keywords: ['SIS', 'migration', 'data', 'di chuyển', 'PSC', 'Edusoft'],
+  },
+  {
+    id: 'a9',
+    section: 'applications',
+    questionKey: 'faq.questions.a9.question',
+    answerKey: 'faq.questions.a9.answer',
+    keywords: ['LMS', 'migration', 'content', 'SCORM', 'khóa học', 'nội dung'],
+  },
+  {
+    id: 'a10',
+    section: 'applications',
+    questionKey: 'faq.questions.a10.question',
+    answerKey: 'faq.questions.a10.answer',
+    keywords: ['portal', 'super app', 'mobile', 'SSO', 'sinh viên', 'tích hợp'],
   },
   // Process Mapping (2)
   {
@@ -381,28 +431,28 @@ export default function FAQPage() {
         </div>
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="py-8 bg-white border-b sticky top-16 z-40 shadow-sm">
+      {/* Search and Filter Section - Compact */}
+      <section className="py-3 bg-white border-b sticky top-16 z-40 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             {/* Search Input */}
-            <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative flex-grow w-full sm:w-auto">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
                 type="text"
                 placeholder={t('faq.search.placeholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-12 text-base"
+                className="pl-9 h-9 text-sm"
               />
             </div>
 
             {/* Section Filter */}
-            <div className="w-full md:w-64">
+            <div className="w-full sm:w-52">
               <Select value={selectedSection} onValueChange={setSelectedSection}>
-                <SelectTrigger className="h-12">
+                <SelectTrigger className="h-9">
                   <div className="flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-gray-500" />
+                    <Filter className="h-3.5 w-3.5 text-gray-500" />
                     <SelectValue placeholder={t('faq.filters.all')} />
                   </div>
                 </SelectTrigger>
@@ -415,17 +465,17 @@ export default function FAQPage() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          {/* Results count */}
-          <div className="mt-4 text-sm text-gray-600">
-            {t('faq.results.count', { count: filteredFAQs.length })}
+            {/* Results count - inline on desktop */}
+            <div className="text-xs text-gray-500 whitespace-nowrap">
+              {t('faq.results.count', { count: filteredFAQs.length })}
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Content */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredFAQs.length === 0 ? (
             <div className="text-center py-16">
@@ -468,9 +518,10 @@ export default function FAQPage() {
                             </span>
                           </AccordionTrigger>
                           <AccordionContent className="px-6 pb-6 pt-2">
-                            <div className="prose prose-sm max-w-none text-gray-600 whitespace-pre-line">
-                              {t(faq.answerKey)}
-                            </div>
+                            <FormattedText 
+                              content={t(faq.answerKey)} 
+                              className="prose prose-sm max-w-none text-gray-600"
+                            />
                             {/* Keywords tags */}
                             <div className="mt-4 flex flex-wrap gap-2">
                               {faq.keywords.slice(0, 5).map((keyword) => (
