@@ -89,14 +89,13 @@ export async function PATCH(
       });
     }
 
-    if (!formData) {
-      return NextResponse.json(
-        { success: false, error: 'Form data is required' },
-        { status: 400 }
-      );
-    }
-
-    const result = await updateSurveyResponse(id, formData, currentSection, isCompleted);
+    // formData is optional in the schema, but we'll use an empty object if not provided
+    const result = await updateSurveyResponse(
+      id,
+      formData || {},
+      currentSection,
+      isCompleted
+    );
 
     if (!result.success) {
       if (result.error === 'Survey not found') {

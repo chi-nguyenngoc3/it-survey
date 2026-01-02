@@ -256,7 +256,7 @@ function generateRowId(email: string): string {
  * Flatten form data for spreadsheet row - captures ALL survey fields
  */
 function flattenFormData(
-  formData: SurveyFormData,
+  formData: Partial<SurveyFormData>,
   rowId: string,
   language: string,
   currentSection: number,
@@ -608,7 +608,7 @@ export async function getSurveyResponseById(rowId: string): Promise<{
  */
 export async function updateSurveyResponse(
   rowId: string,
-  formData: SurveyFormData,
+  formData: Partial<SurveyFormData>,
   currentSection?: number,
   isCompleted?: boolean
 ): Promise<{ success: boolean; error?: string }> {
