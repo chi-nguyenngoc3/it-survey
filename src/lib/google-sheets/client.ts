@@ -180,14 +180,44 @@ export const SHEET_HEADERS = [
 ];
 
 /**
+ * Parse private key to handle multiple formats from environment variables
+ * Handles: escaped \n, literal \n, double-escaped \\n, and quoted strings
+ */
+function parsePrivateKey(key: string | undefined): string | null {
+  if (!key) return null;
+  
+  let privateKey = key;
+  
+  // Remove surrounding quotes if present (some env var systems add them)
+  if ((privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+      (privateKey.startsWith("'") && privateKey.endsWith("'"))) {
+    privateKey = privateKey.slice(1, -1);
+  }
+  
+  // Replace escaped newlines with actual newlines
+  // Handle both \n and \\n formats
+  privateKey = privateKey
+    .replace(/\\\\n/g, '\n')  // \\n -> newline
+    .replace(/\\n/g, '\n');    // \n -> newline
+  
+  // Validate PEM format
+  if (!privateKey.includes('-----BEGIN') || !privateKey.includes('-----END')) {
+    console.error('Invalid private key format: missing PEM headers');
+    return null;
+  }
+  
+  return privateKey;
+}
+
+/**
  * Create Google Auth client
  */
 function createAuth() {
   const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  const privateKey = parsePrivateKey(process.env.GOOGLE_PRIVATE_KEY);
 
   if (!clientEmail || !privateKey) {
-    console.error('Missing Google credentials');
+    console.error('Missing Google credentials - clientEmail:', !!clientEmail, 'privateKey:', !!privateKey);
     return null;
   }
 
