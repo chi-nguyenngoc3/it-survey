@@ -59,6 +59,8 @@ export interface ERPSystem {
   implementationYear: string;
   modules: string[];
   integration: string;
+  users: string;
+  satisfaction: string;
 }
 
 // LMS System
@@ -75,12 +77,36 @@ export interface SISSystem {
   hosting: string;
   integration: string;
   customization: string;
+  users: string;
+  satisfaction: string;
 }
 
 // CRM System
 export interface CRMSystem {
   vendor: string;
   purpose: string;
+  users: string;
+  hosting: string;
+  satisfaction: string;
+}
+
+// HRIS System
+export interface HRISSystem {
+  vendor: string;
+  hosting: string;
+  users: string;
+  satisfaction: string;
+}
+
+// Library System
+export interface LibrarySystem {
+  vendor: string;
+  users: string;
+}
+
+// Portal System
+export interface PortalSystem {
+  vendor: string;
   users: string;
 }
 
@@ -188,18 +214,27 @@ export interface SurveyFormData {
   incidentManagement: IncidentManagement;
   problemManagement: ProblemManagement;
   assetManagement: AssetManagement;
+  pmMethodology: string;
+  annualProjects: string;
+  projectSuccessRate: string;
+  sdlcPractice: string;
 
   // Applications Landscape
   erp: ERPSystem;
   lms: LMSSystem;
   sis: SISSystem;
   crm: CRMSystem;
+  hris: HRISSystem;
+  library: LibrarySystem;
+  portal: PortalSystem;
   totalApplications: string;
   applicationsByCategory: Record<string, string>;
   integrationPlatform: string;
   apiManagementTool: string;
   ssoProvider: string;
   etlTool: string;
+  saasPercent: string;
+  integrationStrategy: string;
   
   // Additional Applications
   studentPortal: string;
@@ -268,6 +303,8 @@ export interface SurveyFormData {
   dataMaturityScore: string;
   itOperationsScore: string;
   painPoints: string;
+  digitalStrategy: string;
+  improvementPriorities: string;
 }
 
 // Survey Response from Database
@@ -364,13 +401,19 @@ export function createInitialFormData(): SurveyFormData {
       cmdbAccuracy: '',
       coverage: ''
     },
+    pmMethodology: '',
+    annualProjects: '',
+    projectSuccessRate: '',
+    sdlcPractice: '',
     erp: {
       vendor: '',
       version: '',
       hosting: '',
       implementationYear: '',
       modules: [],
-      integration: ''
+      integration: '',
+      users: '',
+      satisfaction: ''
     },
     lms: {
       vendor: '',
@@ -382,11 +425,29 @@ export function createInitialFormData(): SurveyFormData {
       vendor: '',
       hosting: '',
       integration: '',
-      customization: ''
+      customization: '',
+      users: '',
+      satisfaction: ''
     },
     crm: {
       vendor: '',
       purpose: '',
+      users: '',
+      hosting: '',
+      satisfaction: ''
+    },
+    hris: {
+      vendor: '',
+      hosting: '',
+      users: '',
+      satisfaction: ''
+    },
+    library: {
+      vendor: '',
+      users: ''
+    },
+    portal: {
+      vendor: '',
       users: ''
     },
     totalApplications: '',
@@ -395,6 +456,8 @@ export function createInitialFormData(): SurveyFormData {
     apiManagementTool: '',
     ssoProvider: '',
     etlTool: '',
+    saasPercent: '',
+    integrationStrategy: '',
     studentPortal: '',
     facultyPortal: '',
     mobileApp: '',
@@ -490,7 +553,9 @@ export function createInitialFormData(): SurveyFormData {
     processDigitizationScore: '',
     dataMaturityScore: '',
     itOperationsScore: '',
-    painPoints: ''
+    painPoints: '',
+    digitalStrategy: '',
+    improvementPriorities: ''
   };
 }
 

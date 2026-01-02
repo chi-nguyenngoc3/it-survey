@@ -6,6 +6,7 @@ import {
   deleteSurveyResponse,
   isGoogleSheetsConfigured,
 } from '@/lib/google-sheets/client';
+import type { SurveyFormData } from '@/types/survey';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -92,7 +93,7 @@ export async function PATCH(
     // formData is optional in the schema, but we'll use an empty object if not provided
     const result = await updateSurveyResponse(
       id,
-      formData || {},
+      (formData || {}) as Partial<SurveyFormData>,
       currentSection,
       isCompleted
     );
