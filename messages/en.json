@@ -557,6 +557,156 @@
       "itOperations": "Score rating IT operations maturity level. Includes: service management, automation, monitoring, incident response. 1=Reactive, 5=AIOps & full automation.",
       "painPoints": "Describe key pain points in current processes and quick win opportunities. Quick wins: Fast improvements, low cost, high impact. Helps prioritize transformation roadmap."
     }
+  },
+  "faq": {
+    "hero": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Detailed answers to common questions about ITSM survey and educational technology"
+    },
+    "search": {
+      "placeholder": "Search by keyword..."
+    },
+    "filters": {
+      "all": "All Topics",
+      "general": "General Questions"
+    },
+    "results": {
+      "count": "Showing {count} questions",
+      "noResults": "No results found",
+      "tryAgain": "Try searching with different keywords or select another category"
+    },
+    "cta": {
+      "title": "Still have questions?",
+      "description": "Learn more about the survey or start now",
+      "aboutButton": "View About",
+      "surveyButton": "Start Survey"
+    },
+    "questions": {
+      "g1": {
+        "question": "Is our survey data kept confidential?",
+        "answer": "Absolutely confidential. We apply industry-standard security measures:\n\n• SSL/TLS encryption for all data in transit\n• Storage on Google Cloud with at-rest encryption\n• Only authorized consulting team members have access\n• Data is anonymized in aggregate benchmark reports\n• Compliance with data protection regulations (PDPA, GDPR principles)\n\nYou can request data deletion after project completion if needed."
+      },
+      "g2": {
+        "question": "How long does it take to complete the survey?",
+        "answer": "Estimated time is approximately 60-90 minutes, which can be split across sessions:\n\n• Institution Profile: 5-8 minutes\n• IT Organization: 7-10 minutes\n• IT Processes: 6-9 minutes\n• Applications: 8-12 minutes\n• Process Mapping: 5-8 minutes\n• Data & Analytics: 4-7 minutes\n• AI & Technology: 3-6 minutes\n• Infrastructure: 6-9 minutes\n• Security: 7-10 minutes\n• Financial: 5-8 minutes\n• Digitization: 5-8 minutes\n\nYou can save progress and return at any time."
+      },
+      "g3": {
+        "question": "How do I save progress and continue later?",
+        "answer": "The system auto-saves every 30 seconds as you enter data. Additionally:\n\n• Data is stored in browser localStorage\n• You can close the browser and return anytime\n• Use the same browser and device to see your progress\n• Recommend periodic JSON export for backup\n\nNote: Clearing browser cache will lose unsubmitted data, so export backup before doing so."
+      },
+      "g4": {
+        "question": "Who will our data be compared against?",
+        "answer": "We benchmark against multiple reputable sources:\n\n• EDUCAUSE Core Data Service (Higher Education)\n• Gartner IT Key Metrics Data\n• TBM Council Benchmarks\n• JISC Digital Capability Framework (UK)\n• Data from our consulting projects in Vietnam and the region\n\nComparisons are grouped by:\n• Institution type (K-12, Higher Ed)\n• Size (student count, employees)\n• Model (public/private)\n• Geographic region"
+      },
+      "g5": {
+        "question": "What will we receive after completing the survey?",
+        "answer": "Depending on engagement scope, you may receive:\n\n**Basic Report:**\n• Digital Maturity Scorecard\n• Benchmark against peer group\n• Gap identification and priority areas\n\n**Advanced Report:**\n• Detailed analysis per domain\n• IT Operating Model recommendations\n• Roadmap and action plan\n• TCO/ROI analysis\n• Executive presentation\n\nContact the consulting team for details on service packages."
+      },
+      "i1": {
+        "question": "How to calculate Student Population with multiple programs?",
+        "answer": "Use Full-Time Equivalent (FTE) or headcount depending on how your organization reports:\n\n**Recommended Method:**\n• Headcount: Total enrolled students (full-time + part-time)\n• FTE: Part-time students counted proportionally (e.g., 2 part-time at 50% = 1 FTE)\n\n**Include:**\n• Full-time and part-time students\n• Graduate students, researchers\n• Online/hybrid students\n• K-12 students (if applicable)\n\n**Exclude:**\n• Short-term/workshop participants\n• Alumni"
+      },
+      "i2": {
+        "question": "What is the definition of 'Campus' in this context?",
+        "answer": "Campus is defined as a physical location with distinct IT infrastructure:\n\n**Count as Separate Campus:**\n• Has independent network infrastructure\n• Has on-site IT staff\n• Geographically distant enough to require separate management\n\n**Don't Count Separately:**\n• Buildings within the same campus grounds\n• Small representative offices\n• Learning centers with only computers\n\nExample: A university with main campus in HCMC, branch campus in Hanoi, and satellite center in Da Nang = 3 campuses."
+      },
+      "o1": {
+        "question": "What is the standard IT Staff to User ratio?",
+        "answer": "According to EDUCAUSE and Gartner benchmarks:\n\n**Higher Education:**\n• Research University: 1:50 - 1:80\n• Comprehensive University: 1:80 - 1:120\n• Community College: 1:100 - 1:150\n\n**K-12:**\n• International/Private: 1:100 - 1:200\n• Public Schools: 1:200 - 1:400\n\n**Note:**\n• Lower ratio (e.g., 1:50) = more IT staff\n• Consider outsourcing level\n• Cloud adoption can reduce infra staff needs\n• Size and complexity of application portfolio matters"
+      },
+      "o2": {
+        "question": "What should be outsourced vs. kept in-house?",
+        "answer": "According to best practices and COBIT framework:\n\n**Keep In-house (Core Competencies):**\n• IT Strategy & Architecture\n• Vendor Management\n• Security Governance\n• Business Relationship Management\n• Critical application administration (SIS, ERP)\n\n**Can Outsource (Commodity Services):**\n• Help Desk Level 1\n• Network/Infrastructure monitoring\n• Backup & DR operations\n• Hardware maintenance\n• Development projects (selective)\n\n**Common Model:**\n• 70/30: 70% in-house, 30% outsource\n• Staff augmentation for peak workloads\n• Managed services for infrastructure"
+      },
+      "o3": {
+        "question": "Who should the CIO report to for maximum effectiveness?",
+        "answer": "Reporting structure reflects IT's strategic importance:\n\n**President/CEO (Recommended for Digital Transformation):**\n• IT is strategic enabler\n• CIO participates in board-level decisions\n• Suitable for digital-first strategy\n\n**Provost/CAO:**\n• Common in Higher Ed\n• Focus on academic technology\n• Needs good relationship with business units\n\n**CFO:**\n• Focus on cost management\n• May limit strategic role\n• Suitable for operational IT focus\n\n**Trend:** More organizations are moving CIO to report directly to CEO to drive digital transformation."
+      },
+      "p1": {
+        "question": "How is ITIL Maturity Level assessed?",
+        "answer": "Using the ITIL Maturity Model with 5 levels:\n\n**Level 1 - Initial/Ad-hoc:**\n• Informal processes\n• Reactive, firefighting mode\n• Dependent on individuals\n\n**Level 2 - Repeatable:**\n• Basic processes are repeated\n• Not fully documented\n• Inconsistent execution\n\n**Level 3 - Defined:**\n• Processes are documented\n• Systematic training and adoption\n• KPIs defined\n\n**Level 4 - Managed:**\n• Regular measurement and analysis\n• Continuous improvement\n• Integration between processes\n\n**Level 5 - Optimizing:**\n• Data-driven optimization\n• High automation\n• Industry-leading practices"
+      },
+      "p2": {
+        "question": "What is a good First Contact Resolution (FCR) rate?",
+        "answer": "FCR is a key metric for Service Desk effectiveness:\n\n**Benchmarks:**\n• >75%: Excellent\n• 65-75%: Good\n• 50-65%: Average\n• <50%: Needs improvement\n\n**Calculation:**\nFCR = (Tickets resolved on first contact / Total tickets) × 100\n\n**Influencing Factors:**\n• Quality knowledge base\n• Training for L1 agents\n• Self-service options\n• Ticket categorization accuracy\n• Environment complexity\n\n**Tips for Improvement:**\n• Invest in knowledge management\n• Empower L1 with tools and access\n• Shift-left strategy"
+      },
+      "p3": {
+        "question": "How often should CAB meetings be held?",
+        "answer": "CAB frequency depends on volume and risk appetite:\n\n**Weekly CAB:**\n• Suitable for high-change environments\n• Balance between speed and control\n• Most common approach\n\n**Bi-weekly/Monthly:**\n• Stable environments\n• Fewer major changes\n• Risk: Bottleneck for urgent changes\n\n**Emergency CAB:**\n• On-demand for critical changes\n• Defined escalation process\n• Virtual meeting acceptable\n\n**Best Practices:**\n• Standard changes: Pre-approved, no CAB needed\n• Normal changes: Regular CAB review\n• Emergency changes: Expedited CAB or authorized approvers"
+      },
+      "a1": {
+        "question": "Which ERP should be chosen for educational institutions?",
+        "answer": "ERP choice depends on size and needs:\n\n**Enterprise (Large Universities):**\n• Oracle Cloud ERP (Financials, HCM)\n• Workday (Finance + HR)\n• SAP S/4HANA\n\n**Mid-market:**\n• Microsoft Dynamics 365\n• Ellucian Banner/Colleague\n• Unit4\n\n**K-12 and SMB:**\n• Sage Intacct\n• NetSuite (Oracle)\n• Local solutions\n\n**Considerations:**\n• Cloud-first vs on-premise\n• Integration with SIS/LMS\n• Total Cost of Ownership (TCO)\n• Implementation complexity\n• Local support availability"
+      },
+      "a2": {
+        "question": "Canvas, Moodle or Blackboard - which LMS to choose?",
+        "answer": "Comparing top LMS platforms for education:\n\n**Canvas (Instructure):**\n• Modern, user-friendly interface\n• Strong mobile experience\n• Open API ecosystem\n• SaaS-only\n• Suitable for: Higher Ed, student-centric\n\n**Moodle:**\n• Open-source, customizable\n• Large community\n• On-premise or hosted\n• Lower TCO\n• Suitable for: Budget-conscious, strong technical team\n\n**Blackboard (Anthology):**\n• Enterprise features\n• Strong LTI support\n• Acquisition may impact roadmap\n• Suitable for: Large institutions, existing customers\n\n**Google Classroom:**\n• Free with Google Workspace for Education\n• Simple, limited features\n• Suitable for: K-12, basic needs\n\n**Trend:** Many organizations transitioning from Blackboard to Canvas."
+      },
+      "a3": {
+        "question": "How important is the Student Information System (SIS)?",
+        "answer": "SIS is the most critical system in the EduTech stack:\n\n**Role of SIS:**\n• System of Record for student data\n• Hub for all student lifecycle processes\n• Critical integration point\n\n**Core Functions:**\n• Student demographics and admissions\n• Course registration and scheduling\n• Grading and transcripts\n• Academic records and degree audit\n• Billing and financial aid interface\n\n**Popular SIS Options:**\n• Ellucian Banner/Colleague (Higher Ed)\n• PowerSchool (K-12)\n• Infinite Campus (K-12)\n• Custom/Local SIMS\n\n**Integration Priority:**\n• LMS (course roster, grades)\n• ERP (billing)\n• CRM (admissions)\n• Identity (SSO)"
+      },
+      "m1": {
+        "question": "Should API or ETL be used for system integration?",
+        "answer": "Choose integration method appropriate for the use case:\n\n**API (Real-time Integration):**\n• When real-time data is needed\n• Transaction-based operations\n• User-facing applications\n• Modern systems with REST/GraphQL\n\n**ETL (Batch Integration):**\n• Data warehouse loading\n• Large volume data sync\n• Historical data migration\n• Reporting and analytics\n\n**iPaaS (Integration Platform as a Service):**\n• Combines API and ETL\n• Pre-built connectors\n• Examples: MuleSoft, Boomi, Workato\n\n**Recommendations:**\n• Student/course data: Real-time API preferred\n• Financial data: Batch acceptable\n• Reporting: ETL to data warehouse\n• Invest in API-first architecture for future flexibility"
+      },
+      "m2": {
+        "question": "How to identify integration gaps and prioritize?",
+        "answer": "Use a framework for assessing integration gaps:\n\n**Step 1: Impact Assessment**\n• Business impact if not integrated\n• Volume of manual work required\n• Risk of data errors\n• User frustration level\n\n**Step 2: Technical Feasibility**\n• API availability\n• Data format compatibility\n• Security requirements\n• Vendor support\n\n**Step 3: Priority Matrix**\n• High Impact + Easy: Quick Wins (do first)\n• High Impact + Hard: Strategic (plan carefully)\n• Low Impact + Easy: Fill-ins\n• Low Impact + Hard: Avoid/Defer\n\n**Common High-Priority Gaps:**\n1. SIS ↔ LMS (student enrollment)\n2. SIS ↔ ERP (billing)\n3. CRM ↔ SIS (admissions)\n4. All ↔ Identity (SSO)"
+      },
+      "d1": {
+        "question": "Data Warehouse or Data Lake - which to choose?",
+        "answer": "Understanding differences and appropriate use cases:\n\n**Data Warehouse:**\n• Structured data, predefined schema\n• Optimized for BI and reporting\n• SQL-based queries\n• Examples: Snowflake, Redshift, BigQuery\n• Use: Operational reporting, dashboards\n\n**Data Lake:**\n• Raw data, schema-on-read\n• Structured + unstructured data\n• Big data analytics, ML\n• Examples: S3, Azure Data Lake, GCS\n• Use: Data science, advanced analytics\n\n**Modern Approach - Lakehouse:**\n• Combines benefits of both\n• Examples: Databricks, Snowflake\n\n**Recommendation for Education:**\n• Start with Data Warehouse for immediate BI needs\n• Add Data Lake when advanced analytics/AI requirements emerge\n• Consider cloud-native solutions for flexibility"
+      },
+      "d2": {
+        "question": "Where to start with Data Governance?",
+        "answer": "Data Governance implementation roadmap for education:\n\n**Phase 1: Foundation (3-6 months)**\n• Define data ownership\n• Identify critical data elements\n• Data classification (PII, sensitive)\n• Basic data quality metrics\n\n**Phase 2: Policies (6-12 months)**\n• Data governance policies\n• Data stewardship roles\n• Metadata management\n• Data quality standards\n\n**Phase 3: Operations (12-18 months)**\n• Data governance council\n• Automated data quality monitoring\n• Master data management\n• Self-service data catalog\n\n**Key Roles:**\n• Data Governance Lead\n• Data Stewards (per domain)\n• Data Owners (business leaders)\n\n**Tools:** Collibra, Alation, Informatica, open-source options"
+      },
+      "d3": {
+        "question": "What dashboards are needed for leadership?",
+        "answer": "Important executive dashboards for education:\n\n**Enrollment & Admissions:**\n• Application funnel\n• Yield rates\n• Enrollment projections\n• Demographic trends\n\n**Academic Performance:**\n• Retention rates\n• Graduation rates\n• Course success rates\n• Student progress tracking\n\n**Financial:**\n• Revenue by program\n• Tuition collection rates\n• Budget vs actual\n• Financial aid impact\n\n**IT Operations:**\n• System availability\n• Ticket volumes and trends\n• Security incidents\n• Project portfolio status\n\n**Best Practices:**\n• Real-time where possible\n• Drill-down capabilities\n• Mobile-friendly\n• Actionable insights, not just data"
+      },
+      "t1": {
+        "question": "What AI use case should education start with?",
+        "answer": "Appropriate AI use cases to start with in EduTech:\n\n**Quick Wins (Low Risk, High Value):**\n1. **Chatbot for Student Support**\n   • FAQ answering\n   • IT help desk\n   • Admissions inquiries\n\n2. **Predictive Analytics**\n   • At-risk student identification\n   • Enrollment forecasting\n   • Course demand prediction\n\n3. **Administrative Automation**\n   • Document processing\n   • Scheduling optimization\n   • Email classification\n\n**Medium Term:**\n• Personalized learning paths\n• Automated grading (essays)\n• Academic advising support\n\n**Considerations:**\n• Start with clear ROI\n• Ensure data quality first\n• Address privacy concerns\n• Build AI literacy"
+      },
+      "t2": {
+        "question": "Which AI chatbot platform should be used?",
+        "answer": "Chatbot platform options for education:\n\n**Enterprise Solutions:**\n• **Microsoft Copilot/Bot Framework**\n  - Teams, Office 365 integration\n  - Azure cognitive services\n  - Good for existing Microsoft shops\n\n• **Salesforce Einstein Bots**\n  - CRM integration\n  - Good for admissions use cases\n\n**Education-Focused:**\n• **Ivy.ai** - Purpose-built for higher ed\n• **Ocelot** - Student services focused\n• **AdmitHub** - Enrollment/admissions\n\n**Build vs Buy:**\n• Buy: Faster deployment, proven in education\n• Build: More customization, need ML expertise\n\n**Implementation Tips:**\n• Start with FAQ-based (easier)\n• Integrate with knowledge base\n• Measure deflection rate\n• Continuous training from conversations"
+      },
+      "t3": {
+        "question": "What technology trends should be monitored for EduTech?",
+        "answer": "Emerging technologies to watch in 2024-2026:\n\n**Immediate Impact:**\n1. **Generative AI**\n   • Content creation\n   • Tutoring assistants\n   • Code assistance\n   • Writing support\n\n2. **Learning Experience Platforms (LXP)**\n   • Beyond traditional LMS\n   • Skills-based learning\n   • Content aggregation\n\n**Growing Adoption:**\n3. **Micro-credentials & Badges**\n   • Alternative credentials\n   • Blockchain verification\n\n4. **Immersive Learning**\n   • VR for labs/simulations\n   • AR for campus navigation\n\n**Longer Term:**\n5. **Adaptive Learning**\n   • AI-driven personalization\n\n6. **Edge Computing**\n   • Low-latency applications\n   • Smart campus sensors"
+      },
+      "f1": {
+        "question": "What cloud adoption strategy is suitable for education?",
+        "answer": "Cloud strategies for educational institutions:\n\n**Cloud-First (Recommended for most):**\n• Default to cloud for new workloads\n• Migrate commodity services first\n• Keep highly regulated data on-prem if needed\n• Target: 60-80% cloud over 3-5 years\n\n**Hybrid Approach:**\n• Core systems: Best-fit decision\n• SIS/ERP: Cloud SaaS preferred\n• Research data: May require on-prem\n• Legacy apps: Lift-and-shift or modernize\n\n**Multi-Cloud Considerations:**\n• Avoid vendor lock-in\n• Best-of-breed services\n• Complexity and cost tradeoffs\n\n**Migration Priority:**\n1. Email/Productivity (Microsoft 365/Google)\n2. LMS (Canvas, etc.)\n3. CRM\n4. ERP/Finance\n5. SIS (last due to complexity)"
+      },
+      "f2": {
+        "question": "How much network bandwidth is enough for a campus?",
+        "answer": "Network bandwidth planning for educational campus:\n\n**Internet Bandwidth (External):**\n• Small campus (<5K users): 1-2 Gbps\n• Medium campus (5-15K users): 2-10 Gbps\n• Large campus (>15K users): 10-40+ Gbps\n\n**Internal Backbone:**\n• Minimum 10 Gbps\n• Recommended 40-100 Gbps core\n• Building distribution: 10 Gbps\n\n**Wi-Fi Capacity:**\n• Density: 1 AP per 25-30 users\n• Standard: Wi-Fi 6 (802.11ax) minimum\n• 6E for high-density areas\n\n**Factors to Consider:**\n• Cloud application usage\n• Video conferencing growth\n• Research data transfers\n• Future growth (plan for 2-3x)\n\n**Redundancy:**\n• Dual ISP connections\n• Geographic diversity\n• SD-WAN for optimization"
+      },
+      "s1": {
+        "question": "Which security framework should be chosen?",
+        "answer": "Security frameworks suitable for education:\n\n**NIST Cybersecurity Framework (Recommended):**\n• Identify, Protect, Detect, Respond, Recover\n• Flexible, risk-based approach\n• Well-adopted in US higher ed\n• Free to implement\n\n**ISO 27001:**\n• International standard\n• Certification available\n• Comprehensive controls\n• Good for organizations seeking formal certification\n\n**CIS Controls:**\n• Prioritized actions\n• Implementation groups by maturity\n• Good starting point for smaller organizations\n\n**FERPA Compliance (US):**\n• Required for student data\n• Combine with security framework\n\n**Implementation Approach:**\n1. Assess current state against chosen framework\n2. Identify gaps\n3. Prioritize based on risk\n4. Implement controls\n5. Monitor and improve continuously"
+      },
+      "s2": {
+        "question": "Does GDPR apply to educational institutions in Vietnam?",
+        "answer": "GDPR and data protection considerations:\n\n**GDPR applies when:**\n• Have students who are EU citizens\n• Collect data from EU residents\n• Have campus or operations in EU\n• Marketing to EU prospects\n\n**Vietnam Data Protection:**\n• Decree 13/2023 on personal data protection\n• Effective from July 2023\n• Similar to GDPR in principles\n\n**Key Requirements:**\n• Data processing transparency\n• Consent management\n• Data subject rights\n• Data breach notification\n• Data protection impact assessment\n\n**Recommendations:**\n• Implement data classification\n• Create privacy notices\n• Establish consent mechanisms\n• Train staff on data handling\n• Prepare incident response plan"
+      },
+      "s3": {
+        "question": "How to implement MFA without user resistance?",
+        "answer": "MFA rollout strategy to reduce resistance:\n\n**Phased Approach:**\n\n**Phase 1: Admin & IT (1 month)**\n• Start with IT staff\n• Learn lessons, refine process\n\n**Phase 2: Faculty & Staff (2-3 months)**\n• Communicate benefits clearly\n• Provide multiple options\n• Help desk readiness\n\n**Phase 3: Students (3-6 months)**\n• Integrate with orientation\n• Peer support programs\n• Simple enrollment process\n\n**Success Factors:**\n• Multiple MFA options (app, SMS, hardware key)\n• Clear communication campaign\n• Self-service enrollment\n• Dedicated support during rollout\n• \"Remember device\" for trusted devices\n\n**Popular MFA Solutions:**\n• Duo Security (popular in education)\n• Microsoft Authenticator\n• Okta Verify\n• Google Authenticator"
+      },
+      "n1": {
+        "question": "What percentage of total budget is appropriate for IT?",
+        "answer": "IT budget benchmarks for education:\n\n**Higher Education (EDUCAUSE Data):**\n• Research Universities: 4-7%\n• Comprehensive Universities: 3-5%\n• Community Colleges: 3-4%\n• Median: ~4.5%\n\n**K-12:**\n• Public Schools: 2-4%\n• Private/International: 3-6%\n\n**IT Cost per Student:**\n• Higher Ed: $500-$1,500/student\n• K-12: $300-$800/student\n\n**Budget Breakdown Typical:**\n• Personnel: 35-45%\n• Software/Cloud: 20-30%\n• Hardware: 10-15%\n• Telecom: 5-10%\n• Projects: 10-15%\n• Other: 5-10%\n\n**Trends:**\n• Shift from CapEx → OpEx\n• Cloud spending growing 15-20%/year\n• Personnel costs stable\n• Hardware declining"
+      },
+      "n2": {
+        "question": "How to calculate TCO and justify IT investments?",
+        "answer": "Total Cost of Ownership (TCO) framework for IT investments:\n\n**TCO Components:**\n\n**Acquisition Costs:**\n• License/subscription fees\n• Implementation services\n• Hardware (if applicable)\n• Training costs\n\n**Operating Costs (Annual):**\n• Maintenance/support fees\n• Cloud hosting costs\n• Integration maintenance\n• Staff time (FTE allocation)\n\n**Hidden Costs:**\n• Downtime and productivity loss\n• Security and compliance\n• End-of-life migration\n\n**ROI Justification:**\n• Cost avoidance (manual labor saved)\n• Revenue impact (enrollment, retention)\n• Risk reduction (security, compliance)\n• Productivity gains (time saved)\n\n**Business Case Template:**\n1. Current state costs\n2. Proposed solution TCO\n3. Benefits quantification\n4. Payback period\n5. Risk analysis"
+      }
+    }
   }
 }
 
